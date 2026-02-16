@@ -14,15 +14,11 @@
 
 <h1>Lista de custos</h1>
 
-<br />
-
 @* <TCButton Label="Add record" Type="EButtonType.Default" OnClick="async () => await OnHandleAddRecordClick2()"></TCButton> *@
 
 <h4 style="text-align: right;">
-    <a @onmouseup="(e) => OnHandleAddRecordClick(e)" @onmousedown="(e) => OnHandleAddRecordClick(e)" @onclick="(e) => OnHandleAddRecordClick(e)">Add record</a>
+    <a class="btn btn-default float-left" @onmouseup="(e) => OnHandleAddRecordClick(e)" @onmousedown="(e) => OnHandleAddRecordClick(e)" @onclick="(e) => OnHandleAddRecordClick(e)">Add record</a>
 </h4>
-
-<br/>
 
 <table class="table table-hover home-news-list news-list">
     <thead>
@@ -31,7 +27,7 @@
             <td><b>Descricao</b></td>
             <td><b>Preco</b></td>
             <td><b>Data</b></td>
-            <td></td>
+            <td style="max-width: 50px;"></td>
         </tr>
     </thead>
     @foreach (var t in this.RecordsList)
@@ -42,7 +38,7 @@
                 <td>@t.Description</td>
                 <td style="text-align: right;">@t.Price</td>
                 <td>@t.DateTime.ToString("dd/MM/yyyy HH:mm")</td>
-                <td><a>Edit</a></td>
+                <td style="max-width: 50px;"><span class="oi oi-link-intact" aria-hidden="true"></span></td>
             </tr>
         </tbody>
     }
@@ -54,9 +50,11 @@
     <FluentValidationValidator />
     <ValidationSummary />
 
-    <Modal ExtraClass="red-input-style" @ref="Modal" Title="@(() => { return RecordModel.RecordId > 0 ? "Editar registro" : "Cadastrar registro"; })" Buttons="Buttons.SaveCancelCustom" Save="async () => await SaveGame()">
-        <TCInputText Id="Titulo" Label="Name" @bind-Value="@RecordModel.Title" OnValidation="@(() => RecordModel.Title)" />
-        <TCInputText Id="Descricao" Label="Palavras chave (separadas por ';')" @bind-Value="@RecordModel.Description" OnValidation="@(() => RecordModel.Description)" />
+    <Modal ExtraClass="red-input-style" @ref="Modal" Title="@(() => { return RecordModel.RecordId > 0 ? "Editar registro" : "Cadastrar registro"; })" Buttons="Buttons.SaveCancel" Save="async () => await SaveRecord()">
+        <TCInputText Id="Title" Label="Titulo" @bind-Value="@RecordModel.Title" OnValidation="@(() => RecordModel.Title)" />
+        <TCInputText Id="Description" Label="Descricao" @bind-Value="@RecordModel.Description" OnValidation="@(() => RecordModel.Description)" />
+        <TCInputText Id="Price" Label="Preco" @bind-Value="@RecordModel.Price" OnValidation="@(() => RecordModel.Price)" />
+        <TCInputText Id="DateTime" Label="Data e hora" @bind-Value="@RecordModel.DateTime" OnValidation="@(() => RecordModel.DateTime)" />
         @* <TCInputText Id="FileName" Label="Imagem" @bind-Value="@RecordModel.Image" OnValidation="@(() => RecordModel.Image)" /> *@
 
        @*  <div class="form-group form-inline">
@@ -83,6 +81,6 @@
 
 <EditForm EditContext="AlertModalContext">
     <Modal @ref="ModalAlert" ExtraClass="modal-backgroud" Title="@(() => { return AlertModel.Title; })" Buttons="Buttons.OK">
-        <GVText Id="Game" Text="@AlertModel.Message" />
+        <TCText Id="Message" Text="@AlertModel.Message" />
     </Modal>
 </EditForm>

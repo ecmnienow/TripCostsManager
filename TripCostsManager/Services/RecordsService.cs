@@ -79,7 +79,8 @@ namespace TripCostsManager.Services
                 record = new RecordEntity()
                 {
                     Title = model.Title,
-                    Description = model.Description
+                    Description = model.Description,
+                    Modification = DateTime.Now
                 };
 
                 var propsModel = typeof(RecordModel).GetProperties();
@@ -92,7 +93,14 @@ namespace TripCostsManager.Services
                     {
                         var value = prop.GetValue(model);
                         if (value?.ToString() != entityProp.GetValue(record)?.ToString())
-                            entityProp.SetValue(record, value);
+                        {
+                            if (entityProp.PropertyType == typeof(DateTime))
+                                entityProp.SetValue(record, Convert.ToDateTime(value));
+                            else if (entityProp.PropertyType == typeof(decimal))
+                                entityProp.SetValue(record, Convert.ToDecimal(value));
+                            else
+                                entityProp.SetValue(record, value);
+                        }
                     }
                 }
 

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
     <link rel="stylesheet" href="@Assets["lib/bootstrap/dist/css/bootstrap.min.css"]" />
+    <link rel="stylesheet" href="@Assets["lib/open-iconic/font/css/open-iconic-bootstrap.min.css"]" />
+    <link rel="stylesheet" href="@Assets["darktheme.css"]" />
     <link rel="stylesheet" href="@Assets["app.css"]" />
     <link rel="stylesheet" href="@Assets["TripCostsManager.styles.css"]" />
     <ImportMap />
@@ -13,7 +15,7 @@
     <HeadOutlet />
 </head>
 
-<body>
+<body class="dark_theme">
     <Routes @rendermode=RenderMode.InteractiveServer />
     <script src="_framework/blazor.web.js"></script>
 </body>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TripCostsManager.Domain.Entities.Entities;
 
 namespace TripCostsManager.Models
@@ -8,6 +9,8 @@ namespace TripCostsManager.Models
         public int RecordId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public string Price { get; set; }
+        public string DateTime { get; set; }
         public ICollection<ImageEntity> Images { get; set; }
 
         public void Clear()

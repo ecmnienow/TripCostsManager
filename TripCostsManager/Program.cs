@@ -1,10 +1,13 @@
+using FluentValidation;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TripCostsManager.Components;
 using TripCostsManager.Domain.Database.DataAccess;
 using TripCostsManager.Domain.Database.Interfaces;
 using TripCostsManager.Domain.Database.Services;
+using TripCostsManager.Models;
 using TripCostsManager.Services;
 
 namespace TripCostsManager
@@ -19,6 +22,8 @@ namespace TripCostsManager
 
             builder.Services.AddSingleton<RecordsDbService>();
             builder.Services.AddSingleton<RecordsService>();
+
+            builder.Services.AddTransient<IValidator<RecordModel>, RecordModelValidator>();
 
             // Add services to the container.
             builder.Services.AddRazorComponents()

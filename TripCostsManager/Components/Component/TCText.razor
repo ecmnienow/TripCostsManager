@@ -1,0 +1,14 @@
+﻿<div class="form-group">
+    <span for="@Id" class="col-form-label">@((MarkupString)Text)</span>
+</div>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public string ExtraClass { get; set; }
+}

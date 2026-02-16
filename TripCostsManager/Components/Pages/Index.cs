@@ -137,12 +137,12 @@ namespace TripCostsManager.Components.Pages
             Modal.Open();
         }
 
-        private async Task SaveGame()
+        private async Task SaveRecord()
         {
-            this.RecordModel.Title = this.RecordModel.Title.Trim();
-
             if (!RecordModelContext.Validate())
                 return;
+
+            this.RecordModel.Title = this.RecordModel.Title.Trim();
 
             try
             {
@@ -170,9 +170,8 @@ namespace TripCostsManager.Components.Pages
             }
             catch (Exception ex)
             {
-                ShowAlert("Erro", "Não foi possível cadastrar o jogo \"" + this.RecordModel.Title + "\".<br/><br/>" + ex.GetInnerExceptionMessage());
+                ShowAlert("Erro", "Não foi possível cadastrar o registro \"" + this.RecordModel.Title + "\".<br/><br/>" + ex.GetInnerExceptionMessage());
             }
-            ;
         }
 
         private async Task Update(int id)
@@ -198,6 +197,8 @@ namespace TripCostsManager.Components.Pages
 
             this.RecordsList.Clear();
             this.RecordsList.AddRange(updatedList);
+
+            StateHasChanged();
         }
 
         private void ShowAlert(string title, string message)

@@ -19,28 +19,28 @@
                 @switch (Buttons)
                 {
                     case Buttons.SaveCancel:
-                        <GVButton Label="Salvar" Type="Models.EButtonType.Primary" OnClick="async () => await AcceptHandler()"></GVButton>
-                        <GVButton Label="Cancelar" Type="Models.EButtonType.Error" OnClick="async () => Close()"></GVButton>
+                        <TCButton Label="Salve" Type="EButtonType.Primary" OnClick="async () => await AcceptHandler()"></TCButton>
+                        <TCButton Label="Cancel" Type="EButtonType.Error" OnClick="async () => Close()"></TCButton>
                         break;
 
                     case Buttons.SaveCancelCustom:
                         <div style="display: flex;text-align; justify-content: space-between; width: 100%;">
-                            <GVButton Label="@CustomActionTitle" Type="Models.EButtonType.Default" OnClick="async () => await CustomActionHandler()"></GVButton>
+                            <TCButton Label="@CustomActionTitle" Type="EButtonType.Default" OnClick="async () => await CustomActionHandler()"></TCButton>
                             <div style="justify-content: flex-end; display: inline-flex;">
-                                <GVButton Label="Salvar" Type="Models.EButtonType.Primary" OnClick="async () => await AcceptHandler()"></GVButton>
+                                <TCButton Label="Salvar" Type="EButtonType.Primary" OnClick="async () => await AcceptHandler()"></TCButton>
                                 &nbsp
-                                <GVButton Label="Cancelar" Type="Models.EButtonType.Error" OnClick="async () => Close()"></GVButton>
+                                <TCButton Label="Cancelar" Type="EButtonType.Error" OnClick="async () => Close()"></TCButton>
                             </div>
                         </div>
                         break;
 
                     case Buttons.OK:
-                        <GVButton Label="OK" Type="Models.EButtonType.Primary" OnClick="async () => Close()"></GVButton>
+                        <TCButton Label="OK" Type="EButtonType.Primary" OnClick="async () => Close()"></TCButton>
                         break;
 
                     case Buttons.YesNo:
-                        <GVButton Label="Yes" Type="Models.EButtonType.Primary" OnClick="async () => await AcceptHandler()"></GVButton>
-                        <GVButton Label="No" Type="Models.EButtonType.Error" OnClick="async () => Close()"></GVButton>
+                        <TCButton Label="Yes" Type="EButtonType.Primary" OnClick="async () => await AcceptHandler()"></TCButton>
+                        <TCButton Label="No" Type="EButtonType.Error" OnClick="async () => Close()"></TCButton>
                         break;
                 }
             </div>

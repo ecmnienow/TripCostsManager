@@ -10,6 +10,12 @@ namespace TripCostsManager.Models
     {
         public RecordModelValidator()
         {
+            RuleFor(x => x.MarketName)
+                .NotEmpty()
+                .WithMessage("Market name is required")
+                .MaximumLength(200)
+                .WithMessage("Value too long, consider less than 200");
+
             RuleFor(x => x.Title)
                 .NotEmpty()
                 .WithMessage("Title is required")

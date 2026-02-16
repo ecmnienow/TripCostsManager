@@ -126,12 +126,12 @@ namespace TripCostsManager.Components.Pages
             Modal.Open();
         }
 
-        private async Task EditGame(MouseEventArgs e, RecordEntity gameEntity)
+        private async Task EditGame(MouseEventArgs e, RecordEntity recordEntity)
         {
             if (e.Button != 0)
                 return;
 
-            this.RecordModel.Load(gameEntity);
+            this.RecordModel.Load(recordEntity);
             RecordModelContext.Validate();
 
             Modal.Open();
@@ -234,6 +234,7 @@ namespace TripCostsManager.Components.Pages
             //OnAddRecordClick?.Invoke(args, this.Model);
             var n = new RecordEntity()
             {
+                MarketName = string.Empty,
                 Title = string.Empty,
                 Description = string.Empty
             };

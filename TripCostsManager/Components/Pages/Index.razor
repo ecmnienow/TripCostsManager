@@ -10,9 +10,9 @@
     <span class="cybr-btn__glitch"></span>
 </div> *@
 
-<PageTitle>Lista de custos</PageTitle>
+<PageTitle>List of trip costs</PageTitle>
 
-<h1>Lista de custos</h1>
+<h1>List of trip costs</h1>
 
 @* <TCButton Label="Add record" Type="EButtonType.Default" OnClick="async () => await OnHandleAddRecordClick2()"></TCButton> *@
 
@@ -23,10 +23,11 @@
 <table class="table table-hover home-news-list news-list">
     <thead>
         <tr>
-            <td><b>Titulo</b></td>
-            <td><b>Descricao</b></td>
-            <td><b>Preco</b></td>
-            <td><b>Data</b></td>
+            <td><b>Market</b></td>
+            <td><b>Title</b></td>
+            <td><b>Description</b></td>
+            <td><b>Price</b></td>
+            <td><b>Date</b></td>
             <td style="max-width: 50px;"></td>
         </tr>
     </thead>
@@ -34,11 +35,12 @@
     {
         <tbody>
             <tr>
+                <td>@t.MarketName</td>
                 <td>@t.Title</td>
                 <td>@t.Description</td>
                 <td style="text-align: right;">@t.Price</td>
                 <td>@t.DateTime.ToString("dd/MM/yyyy HH:mm")</td>
-                <td style="max-width: 50px;"><span class="oi oi-link-intact" aria-hidden="true"></span></td>
+                <td style="max-width: 50px;"><span class="oi oi-pencil" style="cursor: pointer;" aria-hidden="true" @onclick="@(async (e) => await EditGame(e, t))"></span></td>
             </tr>
         </tbody>
     }
@@ -50,7 +52,8 @@
     <FluentValidationValidator />
     <ValidationSummary />
 
-    <Modal ExtraClass="red-input-style" @ref="Modal" Title="@(() => { return RecordModel.RecordId > 0 ? "Editar registro" : "Cadastrar registro"; })" Buttons="Buttons.SaveCancel" Save="async () => await SaveRecord()">
+    <Modal ExtraClass="red-input-style" @ref="Modal" Title="@(() => { return RecordModel.RecordId > 0 ? "Edit record" : "Add record"; })" Buttons="Buttons.SaveCancel" Save="async () => await SaveRecord()">
+        <TCInputText Id="MarketName" Label="Market" @bind-Value="@RecordModel.MarketName" OnValidation="@(() => RecordModel.MarketName)" />
         <TCInputText Id="Title" Label="Titulo" @bind-Value="@RecordModel.Title" OnValidation="@(() => RecordModel.Title)" />
         <TCInputText Id="Description" Label="Descricao" @bind-Value="@RecordModel.Description" OnValidation="@(() => RecordModel.Description)" />
         <TCInputText Id="Price" Label="Preco" @bind-Value="@RecordModel.Price" OnValidation="@(() => RecordModel.Price)" />

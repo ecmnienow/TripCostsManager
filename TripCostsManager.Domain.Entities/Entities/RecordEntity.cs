@@ -18,6 +18,9 @@ namespace TripCostsManager.Domain.Entities.Entities
 
         [Required]
         [MaxLength(200)]
+        public required string MarketName { get; set; }
+        [Required]
+        [MaxLength(200)]
         public required string Title { get; set; }
         [MaxLength(4000)]
         public required string Description { get; set; }

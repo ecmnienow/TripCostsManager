@@ -65,7 +65,15 @@ namespace TripCostsManager.Services
                     if (entityProp != null && entityProp.Name != "Id")
                     {
                         var value = prop.GetValue(model);
-                        if (value?.ToString() != entityProp.GetValue(record)?.ToString())
+
+                        if (value?.ToString() == entityProp.GetValue(record)?.ToString())
+                            continue;
+
+                        if (entityProp.PropertyType == typeof(DateTime))
+                            entityProp.SetValue(record, Convert.ToDateTime(value));
+                        else if (entityProp.PropertyType == typeof(decimal))
+                            entityProp.SetValue(record, Convert.ToDecimal(value));
+                        else
                             entityProp.SetValue(record, value);
                     }
                     else if (prop.Name != "RecordId")
@@ -78,6 +86,7 @@ namespace TripCostsManager.Services
             {
                 record = new RecordEntity()
                 {
+                    MarketName = model.MarketName,
                     Title = model.Title,
                     Description = model.Description,
                     Modification = DateTime.Now

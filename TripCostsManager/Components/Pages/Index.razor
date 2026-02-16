@@ -1,0 +1,88 @@
+﻿@page "/"
+
+@inject RecordsService RecordsService
+@inject NavigationManager NavigationManager
+
+@inject IJSRuntime jsRuntime
+
+@* <div class="btn btn-reload float-left cybr-btn cybr-default" style="position: fixed;">
+    <span class="oi oi-reload" aria-hidden="true" @onclick="() => Update(true)"></span>
+    <span class="cybr-btn__glitch"></span>
+</div> *@
+
+<PageTitle>Lista de custos</PageTitle>
+
+<h1>Lista de custos</h1>
+
+<br />
+
+@* <TCButton Label="Add record" Type="EButtonType.Default" OnClick="async () => await OnHandleAddRecordClick2()"></TCButton> *@
+
+<h4 style="text-align: right;">
+    <a @onmouseup="(e) => OnHandleAddRecordClick(e)" @onmousedown="(e) => OnHandleAddRecordClick(e)" @onclick="(e) => OnHandleAddRecordClick(e)">Add record</a>
+</h4>
+
+<br/>
+
+<table class="table table-hover home-news-list news-list">
+    <thead>
+        <tr>
+            <td><b>Titulo</b></td>
+            <td><b>Descricao</b></td>
+            <td><b>Preco</b></td>
+            <td><b>Data</b></td>
+            <td></td>
+        </tr>
+    </thead>
+    @foreach (var t in this.RecordsList)
+    {
+        <tbody>
+            <tr>
+                <td>@t.Title</td>
+                <td>@t.Description</td>
+                <td style="text-align: right;">@t.Price</td>
+                <td>@t.DateTime.ToString("dd/MM/yyyy HH:mm")</td>
+                <td><a>Edit</a></td>
+            </tr>
+        </tbody>
+    }
+</table>
+
+@* <RecordPage RecordsList="this.RecordsList"></RecordPage> *@
+
+<EditForm EditContext="RecordModelContext">
+    <FluentValidationValidator />
+    <ValidationSummary />
+
+    <Modal ExtraClass="red-input-style" @ref="Modal" Title="@(() => { return RecordModel.RecordId > 0 ? "Editar registro" : "Cadastrar registro"; })" Buttons="Buttons.SaveCancelCustom" Save="async () => await SaveGame()">
+        <TCInputText Id="Titulo" Label="Name" @bind-Value="@RecordModel.Title" OnValidation="@(() => RecordModel.Title)" />
+        <TCInputText Id="Descricao" Label="Palavras chave (separadas por ';')" @bind-Value="@RecordModel.Description" OnValidation="@(() => RecordModel.Description)" />
+        @* <TCInputText Id="FileName" Label="Imagem" @bind-Value="@RecordModel.Image" OnValidation="@(() => RecordModel.Image)" /> *@
+
+       @*  <div class="form-group form-inline">
+            <GVCheckBox Id="Interested" Label="Interessante" @bind-Value="@RecordModel.Interested" ExtraClass="col-6" />
+            <GVCheckBox Id="Ignored" Label="Ignorado" @bind-Value="@RecordModel.Ignored" ExtraClass="col-6" />
+        </div> *@
+    </Modal>
+</EditForm>
+
+@* <EditForm EditContext="RecordModelContext">
+    <Modal ExtraClass="red-input-style" @ref="ModalBind" Title="@(() => { return "Vincular jogo"; })" Buttons="Buttons.SaveCancel" Save="async () => await SaveBind()">
+        <div class="form-group">
+            <BlazoredTypeahead SearchMethod="SearchGame" MinimumLength="2" @bind-Value="BindModel.Game" placeholder="Name">
+                <SelectedTemplate Context="bindGameContext">
+                    @bindGameContext?.Name
+                </SelectedTemplate>
+                <ResultTemplate Context="bindGameContext">
+                    @bindGameContext.Name
+                </ResultTemplate>
+            </BlazoredTypeahead>
+        </div>
+    </Modal>
+</EditForm> *@
+
+<EditForm EditContext="AlertModalContext">
+    <Modal @ref="ModalAlert" ExtraClass="modal-backgroud" Title="@(() => { return AlertModel.Title; })" Buttons="Buttons.OK">
+        <GVText Id="Game" Text="@AlertModel.Message" />
+    </Modal>
+</EditForm>

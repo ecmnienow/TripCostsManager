@@ -1,0 +1,55 @@
+﻿@inject IJSRuntime JSRuntime
+
+<div class="modal @ModalClass @ExtraClass" tabindex="-1" role="dialog" style="display:@ModalDisplay" @onkeyup="@OnEsc" @ref="_element">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Title()</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="() => Close()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @if(ChildContent != null)
+            {
+                <div class="modal-body" style="background: #222 none repeat scroll 0 0;">
+                    @ChildContent
+                </div>
+            }
+            <div class="modal-footer" style="background: #222 none repeat scroll 0 0;">
+                @switch (Buttons)
+                {
+                    case Buttons.SaveCancel:
+                        <GVButton Label="Salvar" Type="Models.EButtonType.Primary" OnClick="async () => await AcceptHandler()"></GVButton>
+                        <GVButton Label="Cancelar" Type="Models.EButtonType.Error" OnClick="async () => Close()"></GVButton>
+                        break;
+
+                    case Buttons.SaveCancelCustom:
+                        <div style="display: flex;text-align; justify-content: space-between; width: 100%;">
+                            <GVButton Label="@CustomActionTitle" Type="Models.EButtonType.Default" OnClick="async () => await CustomActionHandler()"></GVButton>
+                            <div style="justify-content: flex-end; display: inline-flex;">
+                                <GVButton Label="Salvar" Type="Models.EButtonType.Primary" OnClick="async () => await AcceptHandler()"></GVButton>
+                                &nbsp
+                                <GVButton Label="Cancelar" Type="Models.EButtonType.Error" OnClick="async () => Close()"></GVButton>
+                            </div>
+                        </div>
+                        break;
+
+                    case Buttons.OK:
+                        <GVButton Label="OK" Type="Models.EButtonType.Primary" OnClick="async () => Close()"></GVButton>
+                        break;
+
+                    case Buttons.YesNo:
+                        <GVButton Label="Yes" Type="Models.EButtonType.Primary" OnClick="async () => await AcceptHandler()"></GVButton>
+                        <GVButton Label="No" Type="Models.EButtonType.Error" OnClick="async () => Close()"></GVButton>
+                        break;
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (ShowBackdrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}

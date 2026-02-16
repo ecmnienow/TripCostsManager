@@ -1,0 +1,10 @@
+﻿@inherits TCInputBase<string>
+
+<div style="padding-right: 10px;">
+    <label for="@Id" class="col-form-label" style="justify-content: unset;">@Label</label>
+    <input id="@Id" name="@Id" type="text" class="form-control" placeholder="@Label" disabled="@Disabled" @bind="CurrentValue" @onkeydown="OnEnterHandle" style="color: black;" />
+    @if(OnValidation != null)
+    {
+        <ValidationMessage For="OnValidation"></ValidationMessage>
+    }
+</div>

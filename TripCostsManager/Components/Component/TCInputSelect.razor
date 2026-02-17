@@ -1,0 +1,27 @@
+﻿@using TripCostsManager.Domain.Entities.Enums
+
+@inherits TCInputBase<EPurpose>
+
+<div style="padding-right: 10px;">
+    <label for="@Id" class="col-form-label" style="justify-content: unset;">@Label</label>
+
+    <select class="form-control" @onchange="args => CurrentValue = (EPurpose)Enum.Parse(typeof(EPurpose), args.Value.ToString())">
+        @if (Selected is null)
+        {
+            <option selected disabled>Choose an Estimate Type</option>
+        }
+        @foreach (var item in Enum.GetNames(typeof(EPurpose)))
+        {
+            if(item == Selected.ToString())
+            {
+                <option selected value="@item">@item</option>
+            }
+            else
+            {
+                <option value="@item">@item</option>
+            }
+        }
+    </select>
+
+    @* <input id="@Id" name="@Id" type="text" class="form-control" placeholder="@Label" disabled="@Disabled" @bind="CurrentValue" @onkeydown="OnEnterHandle" style="color: black;" /> *@
+</div>

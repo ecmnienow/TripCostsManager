@@ -5,7 +5,7 @@ using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace TripCostsManager.Components.Layout
+namespace TripCostsManager.Components
 {
     public partial class TCInputBase<T> : InputBase<T>
     {

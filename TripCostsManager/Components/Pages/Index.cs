@@ -90,6 +90,22 @@ namespace TripCostsManager.Components.Pages
             Modal.Open();
         }
 
+        private async Task DeleteRecord(MouseEventArgs e, RecordEntity recordEntity)
+        {
+            try
+            {
+                await RecordsService.DeleteRecordAsync(recordEntity);
+
+                await Update();
+
+                Modal.Close();
+            }
+            catch (Exception ex)
+            {
+                ShowAlert("Erro", "Não foi possível excluir o registro \"" + recordEntity.Title + "\".<br/><br/>" + ex.GetInnerExceptionMessage());
+            }
+        }
+
         private async Task SaveRecord()
         {
             if (!RecordModelContext.Validate())
@@ -99,22 +115,6 @@ namespace TripCostsManager.Components.Pages
 
             try
             {
-                //var ext = Path.GetExtension(this.RecordModel.Image).ToLower();
-                //if (ext.IndexOf('?') > 0)
-                //    ext = ext.Substring(0, ext.IndexOf('?'));
-
-                //if ((ext == ".jpg" || ext == ".jpeg" || ext == ".gif" || ext == ".bmp" || ext == ".png") &&
-                //    Path.GetFileNameWithoutExtension(this.RecordModel.Image).Length != 32)
-                //{
-                //    string customName;
-                //    using (var md5 = MD5.Create())
-                //    {
-                //        var bytes = Encoding.UTF8.GetBytes(this.RecordModel.RecordId.ToString());
-                //        customName = BitConverter.ToString(md5.ComputeHash(bytes));
-                //        customName = customName.Replace("-", "").ToLower();
-                //    }
-                //}
-
                 await RecordsService.SaveRecord(this.RecordModel);
 
                 await Update();
@@ -194,36 +194,36 @@ namespace TripCostsManager.Components.Pages
 
         #endregion
 
-        //#region Overridden Methods
+        #region Overridden Methods
 
-        //protected override async Task OnParametersSetAsync()
-        //{
-        //    var regex = new Regex("http[s]{0,1}:\\/\\/localhost:[0-9]*?\\/");
-        //    if (!regex.IsMatch(NavigationManager.Uri)
-        //        //&&
-        //        //!NavigationManager.Uri.EndsWith("/Favorites") &&
-        //        //!NavigationManager.Uri.EndsWith("/Search") &&
-        //        //!NavigationManager.Uri.EndsWith("/games") &&
-        //        //!NavigationManager.Uri.EndsWith("/history/1") &&
-        //        //!NavigationManager.Uri.EndsWith("/history/7") &&
-        //        //!NavigationManager.Uri.EndsWith("/history/30") &&
-        //        //!NavigationManager.Uri.EndsWith("/Logs")
-        //        )
-        //    {
-        //        try
-        //        {
-        //            await jsRuntime.InvokeVoidAsync("console.info", $"Currenmt URL: {NavigationManager.Uri}");
-        //        }
-        //        catch { }
+        protected override async Task OnParametersSetAsync()
+        {
+            var regex = new Regex("http[s]{0,1}:\\/\\/localhost:[0-9]*?\\/");
+            if (!regex.IsMatch(NavigationManager.Uri)
+                //&&
+                //!NavigationManager.Uri.EndsWith("/Favorites") &&
+                //!NavigationManager.Uri.EndsWith("/Search") &&
+                //!NavigationManager.Uri.EndsWith("/games") &&
+                //!NavigationManager.Uri.EndsWith("/history/1") &&
+                //!NavigationManager.Uri.EndsWith("/history/7") &&
+                //!NavigationManager.Uri.EndsWith("/history/30") &&
+                //!NavigationManager.Uri.EndsWith("/Logs")
+                )
+            {
+                try
+                {
+                    await jsRuntime.InvokeVoidAsync("console.info", $"Currenmt URL: {NavigationManager.Uri}");
+                }
+                catch { }
 
-        //        return;
-        //    }
+                return;
+            }
 
-        //    this.RecordsList.Clear();
-        //    await LoadRecords();
-        //}
+            this.RecordsList.Clear();
+            await LoadRecords();
+        }
 
-        //#endregion
+        #endregion
 
         private async Task<IEnumerable<ItemTypeEntity>> SearchItemType(string criteria)
         {

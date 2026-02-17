@@ -946,7 +946,8 @@ body.dark_theme .top-row {
 .dark_theme input[type="tel"]:not(.browser-default),
 .dark_theme input[type="number"]:not(.browser-default),
 .dark_theme input[type="search"]:not(.browser-default),
-.dark_theme textarea.materialize-textarea {
+.dark_theme textarea.materialize-textarea,
+.dark_theme select:not(.browser-default) {
     color: #eee;
 }
 
@@ -1159,7 +1160,8 @@ body.dark_theme .top-row {
         background-color: rgba(255,255,255,0.1);
     }
 
-.dark_theme input[type=text] {
+.dark_theme input[type=text],
+.dark_theme select {
     background: #222;
     background: linear-gradient(#333, #222);
     border: 1px solid #444;
@@ -1170,3 +1172,7 @@ body.dark_theme .top-row {
     .dark_theme input[type=text]:focus {
         color: #fff !important;
     }
+
+.dark_theme select {
+    appearance: menulist-button;
+}

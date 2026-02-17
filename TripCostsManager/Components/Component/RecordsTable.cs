@@ -27,5 +27,8 @@ namespace TripCostsManager.Components.Component
 
         [Parameter]
         public Action<MouseEventArgs, RecordEntity> OnClickEdit { get; set; }
+
+        [Parameter]
+        public Action<MouseEventArgs, RecordEntity> OnClickDelete { get; set; }
     }
 }

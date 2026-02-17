@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TripCostsManager.Domain.Entities.Entities;
+using TripCostsManager.Domain.Entities.Enums;
 
 namespace TripCostsManager.Models
 {
@@ -10,19 +11,9 @@ namespace TripCostsManager.Models
         public string MarketName { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public EPurpose Purpose { get; set; }
         public string Price { get; set; }
         public string DateTime { get; set; }
-        //public string ItemTypeName 
-        //{
-        //    get { return this.ItemType?.Name ?? ""; }
-        //    set 
-        //    {
-        //        if (this.ItemType == null)
-        //            this.ItemType = new ItemTypeEntity() { Name = value };
-
-        //        this.ItemType.Name = value; 
-        //    }
-        //}
         public ItemTypeEntity ItemType { get; set; }
         public ICollection<ImageEntity> Images { get; set; }
 

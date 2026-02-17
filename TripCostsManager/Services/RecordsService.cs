@@ -120,9 +120,17 @@ namespace TripCostsManager.Services
 
             return Task.CompletedTask;
         }
+
         public Task AddRecordAsync(RecordEntity record)
         {
             this._recordsDbService.Save(record);
+
+            return Task.CompletedTask;
+        }
+
+        public Task DeleteRecordAsync(RecordEntity record)
+        {
+            this._recordsDbService.Delete(record);
 
             return Task.CompletedTask;
         }

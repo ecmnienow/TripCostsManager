@@ -2,7 +2,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Reflection;
+using TripCostsManager.Domain.Entities.Enums;
 
 namespace TripCostsManager
 {
@@ -34,6 +37,13 @@ namespace TripCostsManager
                 return ex.InnerException.GetInnerExceptionMessage();
 
             return ex.Message;
+        }
+
+        public static string GetEnumDescription(this EPurpose enumValue)
+        {
+            var fields = enumValue.GetType().GetField(enumValue.ToString());
+            var attributes = (DescriptionAttribute[])fields.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            return attributes.Length > 0 ? attributes[0].Description : enumValue.ToString();
         }
     }
 }

@@ -109,7 +109,8 @@ namespace TripCostsManager.Components.Pages
 
         #region Private Methods
 
-        private async Task AddRecord(MouseEventArgs e, RecordEntity newsEntity)
+        //private async Task AddRecord(MouseEventArgs e, RecordEntity newsEntity)
+        private async Task AddRecord(RecordEntity recordEntity)
         {
             try
             {
@@ -212,7 +213,20 @@ namespace TripCostsManager.Components.Pages
 
         #endregion
 
-        public async void OnHandleAddRecordClick(MouseEventArgs args)
+        //public async void OnHandleAddRecordClick(MouseEventArgs args)
+        //{
+        //    //OnAddRecordClick?.Invoke(args, this.Model);
+        //    var n = new RecordEntity()
+        //    {
+        //        MarketName = string.Empty,
+        //        Title = string.Empty,
+        //        Description = string.Empty
+        //    };
+
+        //    await AddRecord(args, n);
+        //}
+
+        public async Task OnHandleAddRecordClick()
         {
             //OnAddRecordClick?.Invoke(args, this.Model);
             var n = new RecordEntity()
@@ -222,7 +236,7 @@ namespace TripCostsManager.Components.Pages
                 Description = string.Empty
             };
 
-            await AddRecord(args, n);
+            await AddRecord(n);
         }
     }
 }

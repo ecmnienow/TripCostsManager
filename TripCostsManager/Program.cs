@@ -8,6 +8,7 @@ using TripCostsManager.Domain.Database.DataAccess;
 using TripCostsManager.Domain.Database.Interfaces;
 using TripCostsManager.Domain.Database.Services;
 using TripCostsManager.Models;
+using TripCostsManager.Models.Validators;
 using TripCostsManager.Services;
 
 namespace TripCostsManager
@@ -22,8 +23,11 @@ namespace TripCostsManager
 
             builder.Services.AddSingleton<RecordsDbService>();
             builder.Services.AddSingleton<RecordsService>();
+            builder.Services.AddSingleton<ItemTypesDbService>();
+            builder.Services.AddSingleton<ItemTypesService>();
 
             builder.Services.AddTransient<IValidator<RecordModel>, RecordModelValidator>();
+            builder.Services.AddTransient<IValidator<ItemTypeModel>, ItemTypeModelValidator>();
 
             // Add services to the container.
             builder.Services.AddRazorComponents()

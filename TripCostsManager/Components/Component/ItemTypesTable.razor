@@ -1,0 +1,17 @@
+﻿<table class="table table-hover home-news-list news-list" style="display: block;">
+    <thead>
+        <tr>
+            <td style="width: 300px;"><b>Name</b></td>
+            <td style="width: 50px;"></td>
+        </tr>
+    </thead>
+    @foreach (var t in this.DataSource)
+    {
+        <tbody>
+            <tr>
+                <td>@t.Name</td>
+                <td><span class="oi oi-pencil" style="cursor: pointer;" aria-hidden="true" @onclick="(e) => this.OnClickEdit(e, t)"></span></td>
+            </tr>
+        </tbody>
+    }
+</table>

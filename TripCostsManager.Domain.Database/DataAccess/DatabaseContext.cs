@@ -53,6 +53,8 @@ namespace TripCostsManager.Domain.Database.DataAccess
         {
             if (typeof(T) == typeof(RecordEntity))
                 RecordSet.Attach((RecordEntity)Convert.ChangeType(entity, typeof(T)));
+            else if (typeof(T) == typeof(ItemTypeEntity))
+                ItemTypeSet.Attach((ItemTypeEntity)Convert.ChangeType(entity, typeof(T)));
             else if (typeof(T) == typeof(ImageEntity))
                 ImagesSet.Attach((ImageEntity)Convert.ChangeType(entity, typeof(T)));
             else
@@ -149,6 +151,7 @@ namespace TripCostsManager.Domain.Database.DataAccess
 
         public IDbSet<ImageEntity> ImagesSet { get; set; }
         public IDbSet<RecordEntity> RecordSet { get; set; }
+        public IDbSet<ItemTypeEntity> ItemTypeSet { get; set; }
 
         #endregion
 

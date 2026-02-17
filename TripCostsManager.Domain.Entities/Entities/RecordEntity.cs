@@ -11,7 +11,7 @@ using TripCostsManager.Domain.Entities.Interfaces;
 
 namespace TripCostsManager.Domain.Entities.Entities
 {
-    [Table("Tasks")]
+    [Table("Records")]
     public class RecordEntity : BaseEntity
     {
         #region Attributes and Properties

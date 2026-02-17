@@ -9,9 +9,10 @@
 
 <h1>List of trip costs</h1>
 
-<h4 style="text-align: right;">
-    <a class="btn btn-default float-left" @onmouseup="(e) => OnHandleAddRecordClick(e)" @onmousedown="(e) => OnHandleAddRecordClick(e)" @onclick="(e) => OnHandleAddRecordClick(e)">Add record</a>
-</h4>
+<div style="text-align: right; margin-bottom: .5rem;">
+    @* <a class="btn btn-default float-left" @onmouseup="(e) => OnHandleAddRecordClick(e)" @onmousedown="(e) => OnHandleAddRecordClick(e)" @onclick="(e) => OnHandleAddRecordClick(e)">Add record</a> *@
+    <TCButton Label="Add record" Type="EButtonType.Primary" OnClick="async () => await OnHandleAddRecordClick()"></TCButton>
+</div>
 
 <RecordsTable DataSource="@this.RecordsList" OnClickEdit="@(async (e, r) => await EditRecord(e, r))"></RecordsTable>
 
@@ -21,10 +22,10 @@
 
     <Modal ExtraClass="red-input-style" @ref="Modal" Title="@(() => { return RecordModel.RecordId > 0 ? "Edit record" : "Add record"; })" Buttons="Buttons.SaveCancel" Save="async () => await SaveRecord()">
         <TCInputText Id="MarketName" Label="Market" @bind-Value="@RecordModel.MarketName" OnValidation="@(() => RecordModel.MarketName)" />
-        <TCInputText Id="Title" Label="Titulo" @bind-Value="@RecordModel.Title" OnValidation="@(() => RecordModel.Title)" />
-        <TCInputText Id="Description" Label="Descricao" @bind-Value="@RecordModel.Description" OnValidation="@(() => RecordModel.Description)" />
-        <TCInputText Id="Price" Label="Preco" @bind-Value="@RecordModel.Price" OnValidation="@(() => RecordModel.Price)" />
-        <TCInputText Id="DateTime" Label="Data e hora" @bind-Value="@RecordModel.DateTime" OnValidation="@(() => RecordModel.DateTime)" />
+        <TCInputText Id="Title" Label="Title" @bind-Value="@RecordModel.Title" OnValidation="@(() => RecordModel.Title)" />
+        <TCInputText Id="Description" Label="Description" @bind-Value="@RecordModel.Description" OnValidation="@(() => RecordModel.Description)" />
+        <TCInputText Id="Price" Label="Price" @bind-Value="@RecordModel.Price" OnValidation="@(() => RecordModel.Price)" />
+        <TCInputText Id="DateTime" Label="Date and time" @bind-Value="@RecordModel.DateTime" OnValidation="@(() => RecordModel.DateTime)" />
         @* <TCInputText Id="FileName" Label="Imagem" @bind-Value="@RecordModel.Image" OnValidation="@(() => RecordModel.Image)" /> *@
 
        @*  <div class="form-group form-inline">

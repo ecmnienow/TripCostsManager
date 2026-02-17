@@ -1,0 +1,31 @@
+﻿@page "/itemtype"
+
+@inject ItemTypesService ItemTypesService
+@inject NavigationManager NavigationManager
+
+@inject IJSRuntime jsRuntime
+
+<PageTitle>Item types</PageTitle>
+
+<h1>Item types</h1>
+
+<div style="text-align: right; margin-bottom: .5rem;">
+    <TCButton Label="Add record" Type="EButtonType.Primary" OnClick="async () => await OnHandleAddItemTypeClick()"></TCButton>
+</div>
+
+<ItemTypesTable DataSource="@this.ItemTypesList" OnClickEdit="@(async (e, r) => await EditItemType(e, r))"></ItemTypesTable>
+
+<EditForm EditContext="ItemTypeModelContext">
+    <FluentValidationValidator />
+    <ValidationSummary />
+
+    <Modal ExtraClass="red-input-style" @ref="Modal" Title="@(() => { return ItemTypeModel.ItemTypeId > 0 ? "Edit item type" : "Add item type"; })" Buttons="Buttons.SaveCancel" Save="async () => await SaveItemType()">
+        <TCInputText Id="Name" Label="Name" @bind-Value="@ItemTypeModel.Name" OnValidation="@(() => ItemTypeModel.Name)" />
+    </Modal>
+</EditForm>
+
+<EditForm EditContext="AlertModalContext">
+    <Modal @ref="ModalAlert" ExtraClass="modal-backgroud" Title="@(() => { return AlertModel.Title; })" Buttons="Buttons.OK">
+        <TCText Id="Message" Text="@AlertModel.Message" />
+    </Modal>
+</EditForm>

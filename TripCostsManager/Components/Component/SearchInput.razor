@@ -1,0 +1,8 @@
+﻿@inherits TCInputBase<string>
+
+<div class="position-fixed" style="right: 1.5rem;">
+    <div class="form-group form-inline">
+        <label style="margin-right: 10px;">@Label</label>
+        <input id="@Id" name="@Id" type="text" class="form-control" placeholder="@Label" @bind-value="CurrentValue" @onkeyup="@OnEnterHandle" style="color: black;" />
+    </div>
+</div>

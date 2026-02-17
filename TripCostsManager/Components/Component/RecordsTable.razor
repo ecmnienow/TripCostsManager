@@ -4,6 +4,7 @@
             <td><b>Market</b></td>
             <td><b>Title</b></td>
             <td><b>Description</b></td>
+            <td><b>Type</b></td>
             <td><b>Price</b></td>
             <td><b>Date</b></td>
             <td style="max-width: 50px;"></td>
@@ -16,6 +17,7 @@
                 <td>@t.MarketName</td>
                 <td>@t.Title</td>
                 <td>@t.Description</td>
+                <td>@(t.ItemType?.Name ?? "")</td>
                 <td style="text-align: right;">@t.Price</td>
                 <td>@t.DateTime.ToString("dd/MM/yyyy HH:mm")</td>
                 <td style="max-width: 50px;"><span class="oi oi-pencil" style="cursor: pointer;" aria-hidden="true" @onclick="(e) => this.OnClickEdit(e, t)"></span></td>

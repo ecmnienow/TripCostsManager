@@ -13,10 +13,10 @@ namespace TripCostsManager.Domain.Entities.Entities
     {
         #region Attributes and Properties
 
-        public int TaskId { get; set; }
+        public int RecordId { get; set; }
 
         //[Required]
-        [ForeignKey("TaskId")]
+        [ForeignKey("RecordId")]
         public virtual RecordEntity Record { get; set; }
 
         [MaxLength(50)]

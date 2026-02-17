@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Accelist.FluentValidation.Blazor" Version="4.0.0" />
     <PackageReference Include="Blazored.FluentValidation" Version="2.2.0" />
-    <PackageReference Include="Blazored.Typeahead" Version="4.7.0" />
+    <PackageReference Include="Blazored.Typeahead" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup>

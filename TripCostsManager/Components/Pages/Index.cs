@@ -194,33 +194,47 @@ namespace TripCostsManager.Components.Pages
 
         #endregion
 
-        #region Overridden Methods
+        //#region Overridden Methods
 
-        protected override async Task OnParametersSetAsync()
+        //protected override async Task OnParametersSetAsync()
+        //{
+        //    var regex = new Regex("http[s]{0,1}:\\/\\/localhost:[0-9]*?\\/");
+        //    if (!regex.IsMatch(NavigationManager.Uri)
+        //        //&&
+        //        //!NavigationManager.Uri.EndsWith("/Favorites") &&
+        //        //!NavigationManager.Uri.EndsWith("/Search") &&
+        //        //!NavigationManager.Uri.EndsWith("/games") &&
+        //        //!NavigationManager.Uri.EndsWith("/history/1") &&
+        //        //!NavigationManager.Uri.EndsWith("/history/7") &&
+        //        //!NavigationManager.Uri.EndsWith("/history/30") &&
+        //        //!NavigationManager.Uri.EndsWith("/Logs")
+        //        )
+        //    {
+        //        try
+        //        {
+        //            await jsRuntime.InvokeVoidAsync("console.info", $"Currenmt URL: {NavigationManager.Uri}");
+        //        }
+        //        catch { }
+
+        //        return;
+        //    }
+
+        //    this.RecordsList.Clear();
+        //    await LoadRecords();
+        //}
+
+        //#endregion
+
+        private async Task<IEnumerable<ItemTypeEntity>> SearchItemType(string criteria)
         {
-            var regex = new Regex("http[s]{0,1}:\\/\\/localhost:[0-9]*?\\/");
-            if (!regex.IsMatch(NavigationManager.Uri) &&
-                !NavigationManager.Uri.EndsWith("/Favorites") &&
-                !NavigationManager.Uri.EndsWith("/Search") &&
-                !NavigationManager.Uri.EndsWith("/games") &&
-                !NavigationManager.Uri.EndsWith("/history/1") &&
-                !NavigationManager.Uri.EndsWith("/history/7") &&
-                !NavigationManager.Uri.EndsWith("/history/30") &&
-                !NavigationManager.Uri.EndsWith("/Logs"))
-            {
-                try
-                {
-                    await jsRuntime.InvokeVoidAsync("console.info", $"Currenmt URL: {NavigationManager.Uri}");
-                }
-                catch { }
+            IEnumerable<ItemTypeEntity> itemTypes;
 
-                return;
-            }
+            if(string.IsNullOrEmpty(criteria))
+                itemTypes = await this.ItemTypesService.GetAllItemTypesAsync();
+            else
+                itemTypes = await this.ItemTypesService.GetAllItemTypesAsync(x => x.Name.ToLower().Contains(criteria.ToLower()));
 
-            this.RecordsList.Clear();
-            await LoadRecords();
+            return await Task.FromResult(itemTypes);
         }
-
-        #endregion
     }
 }

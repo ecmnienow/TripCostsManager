@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @inject RecordsService RecordsService
+@inject ItemTypesService ItemTypesService
 @inject NavigationManager NavigationManager
 
 @inject IJSRuntime jsRuntime
@@ -24,31 +25,31 @@
         <TCInputText Id="MarketName" Label="Market" @bind-Value="@RecordModel.MarketName" OnValidation="@(() => RecordModel.MarketName)" />
         <TCInputText Id="Title" Label="Title" @bind-Value="@RecordModel.Title" OnValidation="@(() => RecordModel.Title)" />
         <TCInputText Id="Description" Label="Description" @bind-Value="@RecordModel.Description" OnValidation="@(() => RecordModel.Description)" />
+        @* <TCInputText Id="ItemType" Label="Item type" @bind-Value="@RecordModel.ItemTypeName" /> *@
         <TCInputText Id="Price" Label="Price" @bind-Value="@RecordModel.Price" OnValidation="@(() => RecordModel.Price)" />
         <TCInputText Id="DateTime" Label="Date and time" @bind-Value="@RecordModel.DateTime" OnValidation="@(() => RecordModel.DateTime)" />
+
+        <div class="form-group">
+            <div class="form-inline">
+                <label class="col-form-label">Type</label>
+            </div>
+            <BlazoredTypeahead SearchMethod="SearchItemType" MinimumLength="2" MaximumSuggestions="100" EnableDropDown="true" @bind-Value="RecordModel.ItemType" placeholder="Name">
+                <SelectedTemplate Context="bindItemTypeContext">
+                    @bindItemTypeContext?.Name
+                </SelectedTemplate>
+                <ResultTemplate Context="bindItemTypeContext">
+                    @bindItemTypeContext.Name
+                </ResultTemplate>
+            </BlazoredTypeahead>
+        </div>
         @* <TCInputText Id="FileName" Label="Imagem" @bind-Value="@RecordModel.Image" OnValidation="@(() => RecordModel.Image)" /> *@
 
-       @*  <div class="form-group form-inline">
+        @*  <div class="form-group form-inline">
             <GVCheckBox Id="Interested" Label="Interessante" @bind-Value="@RecordModel.Interested" ExtraClass="col-6" />
             <GVCheckBox Id="Ignored" Label="Ignorado" @bind-Value="@RecordModel.Ignored" ExtraClass="col-6" />
         </div> *@
     </Modal>
 </EditForm>
-
-@* <EditForm EditContext="RecordModelContext">
-    <Modal ExtraClass="red-input-style" @ref="ModalBind" Title="@(() => { return "Vincular jogo"; })" Buttons="Buttons.SaveCancel" Save="async () => await SaveBind()">
-        <div class="form-group">
-            <BlazoredTypeahead SearchMethod="SearchGame" MinimumLength="2" @bind-Value="BindModel.Game" placeholder="Name">
-                <SelectedTemplate Context="bindGameContext">
-                    @bindGameContext?.Name
-                </SelectedTemplate>
-                <ResultTemplate Context="bindGameContext">
-                    @bindGameContext.Name
-                </ResultTemplate>
-            </BlazoredTypeahead>
-        </div>
-    </Modal>
-</EditForm> *@
 
 <EditForm EditContext="AlertModalContext">
     <Modal @ref="ModalAlert" ExtraClass="modal-backgroud" Title="@(() => { return AlertModel.Title; })" Buttons="Buttons.OK">

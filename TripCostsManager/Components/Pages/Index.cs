@@ -109,7 +109,7 @@ namespace TripCostsManager.Components.Pages
 
         #region Private Methods
 
-        private async Task AddGame(MouseEventArgs e, RecordEntity recordEntity)
+        private async Task AddRecord(MouseEventArgs e, RecordEntity newsEntity)
         {
             try
             {
@@ -121,12 +121,12 @@ namespace TripCostsManager.Components.Pages
             }
 
             this.RecordModel.Clear();
-            this.RecordModel.Images = recordEntity.Images;
+            //this.RecordModel.Image = newsEntity.Image;
 
             Modal.Open();
         }
 
-        private async Task EditGame(MouseEventArgs e, RecordEntity recordEntity)
+        private async Task EditRecord(MouseEventArgs e, RecordEntity recordEntity)
         {
             if (e.Button != 0)
                 return;
@@ -210,23 +210,6 @@ namespace TripCostsManager.Components.Pages
             ModalAlert.Open();
         }
 
-        private async Task AddRecord(MouseEventArgs e, RecordEntity newsEntity)
-        {
-            try
-            {
-                this.RecordModelContext.ClearContext();
-            }
-            catch (Exception ex)
-            {
-                await jsRuntime.InvokeVoidAsync("console.error", ex.ToString());
-            }
-
-            this.RecordModel.Clear();
-            //this.RecordModel.Image = newsEntity.Image;
-
-            Modal.Open();
-        }
-
         #endregion
 
         public async void OnHandleAddRecordClick(MouseEventArgs args)
@@ -240,13 +223,6 @@ namespace TripCostsManager.Components.Pages
             };
 
             await AddRecord(args, n);
-        }
-
-        public async Task OnHandleAddRecordClick2()
-        {
-            //OnAddRecordClick?.Invoke(args, this.Model);
-
-            //Task.CompletedTask;
         }
     }
 }

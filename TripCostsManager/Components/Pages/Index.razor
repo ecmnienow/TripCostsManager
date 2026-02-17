@@ -5,48 +5,15 @@
 
 @inject IJSRuntime jsRuntime
 
-@* <div class="btn btn-reload float-left cybr-btn cybr-default" style="position: fixed;">
-    <span class="oi oi-reload" aria-hidden="true" @onclick="() => Update(true)"></span>
-    <span class="cybr-btn__glitch"></span>
-</div> *@
-
 <PageTitle>List of trip costs</PageTitle>
 
 <h1>List of trip costs</h1>
-
-@* <TCButton Label="Add record" Type="EButtonType.Default" OnClick="async () => await OnHandleAddRecordClick2()"></TCButton> *@
 
 <h4 style="text-align: right;">
     <a class="btn btn-default float-left" @onmouseup="(e) => OnHandleAddRecordClick(e)" @onmousedown="(e) => OnHandleAddRecordClick(e)" @onclick="(e) => OnHandleAddRecordClick(e)">Add record</a>
 </h4>
 
-<table class="table table-hover home-news-list news-list">
-    <thead>
-        <tr>
-            <td><b>Market</b></td>
-            <td><b>Title</b></td>
-            <td><b>Description</b></td>
-            <td><b>Price</b></td>
-            <td><b>Date</b></td>
-            <td style="max-width: 50px;"></td>
-        </tr>
-    </thead>
-    @foreach (var t in this.RecordsList)
-    {
-        <tbody>
-            <tr>
-                <td>@t.MarketName</td>
-                <td>@t.Title</td>
-                <td>@t.Description</td>
-                <td style="text-align: right;">@t.Price</td>
-                <td>@t.DateTime.ToString("dd/MM/yyyy HH:mm")</td>
-                <td style="max-width: 50px;"><span class="oi oi-pencil" style="cursor: pointer;" aria-hidden="true" @onclick="@(async (e) => await EditGame(e, t))"></span></td>
-            </tr>
-        </tbody>
-    }
-</table>
-
-@* <RecordPage RecordsList="this.RecordsList"></RecordPage> *@
+<RecordsTable DataSource="@this.RecordsList" OnClickEdit="@(async (e, r) => await EditRecord(e, r))"></RecordsTable>
 
 <EditForm EditContext="RecordModelContext">
     <FluentValidationValidator />

@@ -15,7 +15,7 @@
     <TCButton Label="Add record" Type="EButtonType.Primary" OnClick="async () => await OnHandleAddRecordClick()"></TCButton>
 </div>
 
-<RecordsTable DataSource="@this.RecordsList" OnClickEdit="@(async (e, r) => await EditRecord(e, r))" OnClickDelete="@(async (e, r) => await DeleteRecord(e, r))"></RecordsTable>
+<RecordsTable DataSource="@this.RecordsList" OnClickEdit="@(async (e, r) => await EditRecord(e, r))" OnClickDelete="@(async (e, r) => await RequestDeleteRecord(e, r))"></RecordsTable>
 
 <EditForm EditContext="RecordModelContext">
     <FluentValidationValidator />
@@ -54,5 +54,10 @@
 <EditForm EditContext="AlertModalContext">
     <Modal @ref="ModalAlert" ExtraClass="modal-backgroud" Title="@(() => { return AlertModel.Title; })" Buttons="Buttons.OK">
         <TCText Id="Message" Text="@AlertModel.Message" />
+    </Modal>
+</EditForm>
+
+<EditForm EditContext="RecordModelContext">
+    <Modal @ref="ModalDelete" Title="@(() => { return "Are you sure you want to delete the record?"; })" Buttons="Buttons.YesNo" Save="async () => await DeleteRecord()">
     </Modal>
 </EditForm>

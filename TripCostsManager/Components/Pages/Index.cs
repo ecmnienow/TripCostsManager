@@ -29,9 +29,11 @@ namespace TripCostsManager.Components.Pages
 
         public Modal Modal { get; set; }
         public Modal ModalAlert { get; set; }
+        public Modal ModalDelete { get; set; }
 
         public AlertModel AlertModel { get; set; } = new AlertModel();
         public RecordModel RecordModel { get; set; } = new RecordModel();
+        public DeleteModel DeleteModel { get; set; } = new DeleteModel();
 
         public EditContext AlertModalContext { get; set; }
         public EditContext RecordModelContext { get; set; }
@@ -90,19 +92,31 @@ namespace TripCostsManager.Components.Pages
             Modal.Open();
         }
 
-        private async Task DeleteRecord(MouseEventArgs e, RecordEntity recordEntity)
+        private async Task RequestDeleteRecord(MouseEventArgs e, RecordEntity newsEntity)
+        {
+            if (e.Button != 0)
+                return;
+
+            this.DeleteModel = new DeleteModel();
+            this.DeleteModel.Id = newsEntity.Id;
+            this.DeleteModel.Title = newsEntity.Title;
+
+            ModalDelete.Open("blazored-typeahead__input");
+        }
+
+        private async Task DeleteRecord()
         {
             try
             {
-                await RecordsService.DeleteRecordAsync(recordEntity);
+                await RecordsService.DeleteRecordAsync(this.DeleteModel.Id);
 
                 await Update();
 
-                Modal.Close();
+                ModalDelete.Close();
             }
-            catch (Exception ex)
+            catch
             {
-                ShowAlert("Erro", "Não foi possível excluir o registro \"" + recordEntity.Title + "\".<br/><br/>" + ex.GetInnerExceptionMessage());
+                ShowAlert("Erro", "Coult not delete the record \"" + this.DeleteModel.Title + "\".");
             }
         }
 

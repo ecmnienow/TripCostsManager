@@ -128,9 +128,9 @@ namespace TripCostsManager.Services
             return Task.CompletedTask;
         }
 
-        public Task DeleteRecordAsync(RecordEntity record)
+        public Task DeleteRecordAsync(int recordId)
         {
-            this._recordsDbService.Delete(record);
+            this._recordsDbService.Delete(recordId);
 
             return Task.CompletedTask;
         }

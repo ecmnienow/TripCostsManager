@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using TripCostsManager.Components.Component;
 using TripCostsManager.Domain.Entities.Entities;
@@ -16,53 +15,6 @@ namespace TripCostsManager.Components.Pages
 {
     public partial class Index : ComponentBase
     {
-        private async Task LoadRecords()
-        {
-            if (this.RecordsList.Any())
-                return;
-
-            var newsList = (await RecordsService.GetAllRecordsAsync())
-                    .ToList();
-
-            foreach (var news in newsList)
-                this.RecordsList.Add(news);
-        }
-
-        private static List<RecordEntity> _recordList { get; } = new List<RecordEntity>();
-        public List<RecordEntity> RecordsList
-        {
-            get { return _recordList; }
-        }
-
-        protected override async Task OnParametersSetAsync()
-        {
-            var regex = new Regex("http[s]{0,1}:\\/\\/localhost:[0-9]*?\\/");
-            if (!regex.IsMatch(NavigationManager.Uri) &&
-                !NavigationManager.Uri.EndsWith("/Favorites") &&
-                !NavigationManager.Uri.EndsWith("/Search") &&
-                !NavigationManager.Uri.EndsWith("/games") &&
-                !NavigationManager.Uri.EndsWith("/history/1") &&
-                !NavigationManager.Uri.EndsWith("/history/7") &&
-                !NavigationManager.Uri.EndsWith("/history/30") &&
-                !NavigationManager.Uri.EndsWith("/Logs"))
-            {
-                try
-                {
-                    await jsRuntime.InvokeVoidAsync("console.info", $"Currenmt URL: {NavigationManager.Uri}");
-                }
-                catch { }
-
-                return;
-            }
-
-            this.RecordsList.Clear();
-            await LoadRecords();
-        }
-
-        [Parameter]
-        public Action<MouseEventArgs, RecordEntity> OnAddRecordClick { get; set; }
-
-
         #region Constructor
 
         public Index()
@@ -75,9 +27,6 @@ namespace TripCostsManager.Components.Pages
 
         #region Attributes and Properties
 
-        [Parameter]
-        //public List<RecordEntity> RecordsList { get; set; }
-
         public Modal Modal { get; set; }
         public Modal ModalAlert { get; set; }
 
@@ -89,21 +38,24 @@ namespace TripCostsManager.Components.Pages
 
 
 
+        private static List<RecordEntity> _recordList { get; } = new List<RecordEntity>();
+        public List<RecordEntity> RecordsList
+        {
+            get { return _recordList; }
+        }
+
+
 
         private RecordEntity _model = null;
         [Parameter]
         public RecordEntity Model
         {
             get { return this._model; }
-            set
-            {
-                this._model = value;
-
-                //this._model.Id = this._model.Id;
-                //this._model.Title = this._model.Title ?? string.Empty;
-                //this._model.Description = this._model.Description ?? string.Empty;
-            }
+            set { this._model = value;}
         }
+
+        [Parameter]
+        public Action<MouseEventArgs, RecordEntity> OnAddRecordClick { get; set; }
 
         #endregion
 
@@ -202,6 +154,18 @@ namespace TripCostsManager.Components.Pages
             StateHasChanged();
         }
 
+        private async Task LoadRecords()
+        {
+            if (this.RecordsList.Any())
+                return;
+
+            var newsList = (await RecordsService.GetAllRecordsAsync())
+                    .ToList();
+
+            foreach (var news in newsList)
+                this.RecordsList.Add(news);
+        }
+
         private void ShowAlert(string title, string message)
         {
             this.AlertModel = new AlertModel();
@@ -213,18 +177,7 @@ namespace TripCostsManager.Components.Pages
 
         #endregion
 
-        //public async void OnHandleAddRecordClick(MouseEventArgs args)
-        //{
-        //    //OnAddRecordClick?.Invoke(args, this.Model);
-        //    var n = new RecordEntity()
-        //    {
-        //        MarketName = string.Empty,
-        //        Title = string.Empty,
-        //        Description = string.Empty
-        //    };
-
-        //    await AddRecord(args, n);
-        //}
+        #region Public Methods
 
         public async Task OnHandleAddRecordClick()
         {
@@ -238,5 +191,36 @@ namespace TripCostsManager.Components.Pages
 
             await AddRecord(n);
         }
+
+        #endregion
+
+        #region Overridden Methods
+
+        protected override async Task OnParametersSetAsync()
+        {
+            var regex = new Regex("http[s]{0,1}:\\/\\/localhost:[0-9]*?\\/");
+            if (!regex.IsMatch(NavigationManager.Uri) &&
+                !NavigationManager.Uri.EndsWith("/Favorites") &&
+                !NavigationManager.Uri.EndsWith("/Search") &&
+                !NavigationManager.Uri.EndsWith("/games") &&
+                !NavigationManager.Uri.EndsWith("/history/1") &&
+                !NavigationManager.Uri.EndsWith("/history/7") &&
+                !NavigationManager.Uri.EndsWith("/history/30") &&
+                !NavigationManager.Uri.EndsWith("/Logs"))
+            {
+                try
+                {
+                    await jsRuntime.InvokeVoidAsync("console.info", $"Currenmt URL: {NavigationManager.Uri}");
+                }
+                catch { }
+
+                return;
+            }
+
+            this.RecordsList.Clear();
+            await LoadRecords();
+        }
+
+        #endregion
     }
 }

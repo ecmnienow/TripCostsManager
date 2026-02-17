@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using TripCostsManager.Components.Component;
 using TripCostsManager.Domain.Entities.Entities;
@@ -16,53 +15,6 @@ namespace TripCostsManager.Components.Pages
 {
     public partial class ItemType : ComponentBase
     {
-        private async Task LoadItemTypes()
-        {
-            if (this.ItemTypesList.Any())
-                return;
-
-            var newsList = (await ItemTypesService.GetAllItemTypesAsync())
-                    .ToList();
-
-            foreach (var news in newsList)
-                this.ItemTypesList.Add(news);
-        }
-
-        private static List<ItemTypeEntity> _itemTypeList { get; } = new List<ItemTypeEntity>();
-        public List<ItemTypeEntity> ItemTypesList
-        {
-            get { return _itemTypeList; }
-        }
-
-        protected override async Task OnParametersSetAsync()
-        {
-            var regex = new Regex("http[s]{0,1}:\\/\\/localhost:[0-9]*?\\/");
-            if (!regex.IsMatch(NavigationManager.Uri) &&
-                !NavigationManager.Uri.EndsWith("/Favorites") &&
-                !NavigationManager.Uri.EndsWith("/Search") &&
-                !NavigationManager.Uri.EndsWith("/games") &&
-                !NavigationManager.Uri.EndsWith("/history/1") &&
-                !NavigationManager.Uri.EndsWith("/history/7") &&
-                !NavigationManager.Uri.EndsWith("/history/30") &&
-                !NavigationManager.Uri.EndsWith("/Logs"))
-            {
-                try
-                {
-                    await jsRuntime.InvokeVoidAsync("console.info", $"Currenmt URL: {NavigationManager.Uri}");
-                }
-                catch { }
-
-                return;
-            }
-
-            this.ItemTypesList.Clear();
-            await LoadItemTypes();
-        }
-
-        [Parameter]
-        public Action<MouseEventArgs, ItemTypeEntity> OnAddItemTypeClick { get; set; }
-
-
         #region Constructor
 
         public ItemType()
@@ -86,13 +38,23 @@ namespace TripCostsManager.Components.Pages
 
 
 
-
         private ItemTypeEntity _model = null;
         [Parameter]
         public ItemTypeEntity Model
         {
             get { return this._model; }
             set { this._model = value; }
+        }
+
+        [Parameter]
+        public Action<MouseEventArgs, ItemTypeEntity> OnAddItemTypeClick { get; set; }
+
+
+
+        private static List<ItemTypeEntity> _itemTypeList { get; } = new List<ItemTypeEntity>();
+        public List<ItemTypeEntity> ItemTypesList
+        {
+            get { return _itemTypeList; }
         }
 
         #endregion
@@ -165,6 +127,18 @@ namespace TripCostsManager.Components.Pages
 
             StateHasChanged();
         }
+        
+        private async Task LoadItemTypes()
+        {
+            if (this.ItemTypesList.Any())
+                return;
+
+            var newsList = (await ItemTypesService.GetAllItemTypesAsync())
+                    .ToList();
+
+            foreach (var news in newsList)
+                this.ItemTypesList.Add(news);
+        }
 
         private void ShowAlert(string title, string message)
         {
@@ -177,6 +151,8 @@ namespace TripCostsManager.Components.Pages
 
         #endregion
 
+        #region Public Methods
+
         public async Task OnHandleAddItemTypeClick()
         {
             var n = new ItemTypeEntity()
@@ -186,5 +162,36 @@ namespace TripCostsManager.Components.Pages
 
             await AddItemType(n);
         }
+
+        #endregion
+
+        #region Overridden Methods
+
+        protected override async Task OnParametersSetAsync()
+        {
+            var regex = new Regex("http[s]{0,1}:\\/\\/localhost:[0-9]*?\\/");
+            if (!regex.IsMatch(NavigationManager.Uri) &&
+                !NavigationManager.Uri.EndsWith("/Favorites") &&
+                !NavigationManager.Uri.EndsWith("/Search") &&
+                !NavigationManager.Uri.EndsWith("/games") &&
+                !NavigationManager.Uri.EndsWith("/history/1") &&
+                !NavigationManager.Uri.EndsWith("/history/7") &&
+                !NavigationManager.Uri.EndsWith("/history/30") &&
+                !NavigationManager.Uri.EndsWith("/Logs"))
+            {
+                try
+                {
+                    await jsRuntime.InvokeVoidAsync("console.info", $"Currenmt URL: {NavigationManager.Uri}");
+                }
+                catch { }
+
+                return;
+            }
+
+            this.ItemTypesList.Clear();
+            await LoadItemTypes();
+        }
+
+        #endregion
     }
 }

@@ -20,6 +20,7 @@ namespace TripCostsManager.Services
         public Task<RecordEntity[]> GetAllRecordsAsync()
         {
             var recordsList = this._recordsDbService.GetAll()
+                .OrderByDescending(x => x.DateTime)
                 .ToList();
 
             return Task.FromResult(recordsList.ToArray());
@@ -27,14 +28,14 @@ namespace TripCostsManager.Services
 
         public Task<RecordEntity[]> GetAllRecordsAsync(Expression<Func<RecordEntity, bool>> extraClause = null)
         {
-            var newsListQuery = this._recordsDbService.GetAll();
+            var recordsListQuery = this._recordsDbService.GetAll();
 
             if (extraClause != null)
-                newsListQuery = newsListQuery.Where(extraClause);
+                recordsListQuery = recordsListQuery.Where(extraClause);
 
-            var newsList = newsListQuery.ToList();
+            var newsList = recordsListQuery.ToList();
 
-            return Task.FromResult(newsListQuery.ToArray());
+            return Task.FromResult(recordsListQuery.ToArray());
         }
 
         public Task<RecordEntity> GetRecordAsync(int id)

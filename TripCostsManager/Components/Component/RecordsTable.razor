@@ -3,14 +3,14 @@
 <table class="table table-hover home-news-list news-list">
     <thead>
         <tr>
-            <td><b>Market</b></td>
-            <td><b>Title</b></td>
+            <td style="min-width: 266px;"><b>Market</b></td>
+            <td style="min-width: 156px;"><b>Title</b></td>
             <td><b>Description</b></td>
-            <td><b>Purpose</b></td>
-            <td><b>Type</b></td>
+            <td style="min-width: 143px;"><b>Purpose</b></td>
+            <td style="min-width: 180px;"><b>Type</b></td>
             <td><b>Price</b></td>
-            <td><b>Date</b></td>
-            <td style="max-width: 50px;"></td>
+            <td style="min-width: 142px;"><b>Date</b></td>
+            <td style="min-width: 54px;"></td>
         </tr>
     </thead>
     @foreach (var t in this.DataSource)
@@ -22,9 +22,9 @@
                 <td>@t.Description</td>
                 <td>@t.Purpose.GetEnumDescription()</td>
                 <td>@(t.ItemType?.Name ?? "")</td>
-                <td style="text-align: right;">@t.Price</td>
+                <td style="text-align: right;">¥@t.Price.ToString("#,##0.##")</td>
                 <td>@t.DateTime.ToString("dd/MM/yyyy HH:mm")</td>
-                <td style="max-width: 50px;">
+                <td>
                     <span class="oi oi-pencil" style="cursor: pointer;" aria-hidden="true" @onclick="(e) => this.OnClickEdit(e, t)"></span>
                     <span class="oi oi-trash" style="cursor: pointer;" aria-hidden="true" @onclick="(e) => this.OnClickDelete(e, t)"></span>
                 </td>

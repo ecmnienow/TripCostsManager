@@ -173,10 +173,10 @@ namespace TripCostsManager.Components.Pages
             if (this.RecordsList.Any())
                 return;
 
-            var newsList = (await RecordsService.GetAllRecordsAsync())
+            var recordsList = (await RecordsService.GetAllRecordsAsync())
                     .ToList();
 
-            foreach (var news in newsList)
+            foreach (var news in recordsList)
                 this.RecordsList.Add(news);
         }
 

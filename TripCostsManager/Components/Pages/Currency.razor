@@ -1,0 +1,33 @@
+﻿@page "/currencies"
+
+@inject CurrenciesService CurrenciesService
+@inject NavigationManager NavigationManager
+
+@inject IJSRuntime jsRuntime
+
+<PageTitle>Currencies</PageTitle>
+
+<h1>Currencies</h1>
+
+<div style="text-align: right; margin-bottom: .5rem;">
+    <TCButton Label="Add record" Type="EButtonType.Primary" OnClick="async () => await OnHandleAddCurrencyClick()"></TCButton>
+</div>
+
+<CurrenciesTable DataSource="@this.CurrenciesList" OnClickEdit="@(async (e, r) => await EditCurrency(e, r))"></CurrenciesTable>
+
+<EditForm EditContext="CurrencyModelContext">
+    <FluentValidationValidator />
+    <ValidationSummary />
+
+    <Modal ExtraClass="red-input-style" @ref="Modal" Title="@(() => { return CurrencyModel.CurrencyId > 0 ? "Edit currency" : "Add currency"; })" Buttons="Buttons.SaveCancel" Save="async () => await SaveCurrency()">
+        <TCInputText Id="Name" Label="Name" @bind-Value="@CurrencyModel.Name" OnValidation="@(() => CurrencyModel.Name)" />
+        <TCInputText Id="CurrencySymbol" Label="Currency symbol" @bind-Value="@CurrencyModel.CurrencySymbol" OnValidation="@(() => CurrencyModel.CurrencySymbol)" />
+        <TCInputText Id="Value" Label="Value" @bind-Value="@CurrencyModel.Value" OnValidation="@(() => CurrencyModel.Value)" />
+    </Modal>
+</EditForm>
+
+<EditForm EditContext="AlertModalContext">
+    <Modal @ref="ModalAlert" ExtraClass="modal-backgroud" Title="@(() => { return AlertModel.Title; })" Buttons="Buttons.OK">
+        <TCText Id="Message" Text="@AlertModel.Message" />
+    </Modal>
+</EditForm>

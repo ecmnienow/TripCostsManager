@@ -14,13 +14,13 @@ namespace TripCostsManager.Models.Validators
                 .NotEmpty()
                 .WithMessage("Market name is required")
                 .MaximumLength(200)
-                .WithMessage("Value too long, consider less than 200");
+                .WithMessage("Market name too long, consider less than 200");
 
             RuleFor(x => x.Title)
                 .NotEmpty()
                 .WithMessage("Title is required")
                 .MaximumLength(200)
-                .WithMessage("Value too long, consider less than 200");
+                .WithMessage("Title too long, consider less than 200");
 
             RuleFor(x => x.Description)
                 .NotEmpty()
@@ -32,7 +32,7 @@ namespace TripCostsManager.Models.Validators
                 .Custom((x, context) =>
                 {
                     if (!decimal.TryParse(x, out decimal value) || value < 0)
-                        context.AddFailure($"\"{x}\" is not a valid number or less than 0");
+                        context.AddFailure($"\"{x}\" is not a valid price or less than 0");
                 });
 
             RuleFor(x => x.DateTime)

@@ -15,6 +15,7 @@ namespace TripCostsManager.Models
         public string Price { get; set; }
         public string DateTime { get; set; }
         public ItemTypeEntity ItemType { get; set; }
+        public CurrencyEntity Currency { get; set; }
         public ICollection<ImageEntity> Images { get; set; }
 
         public void Clear()

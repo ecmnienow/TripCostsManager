@@ -3,11 +3,11 @@ using TripCostsManager.Domain.Entities.Entities;
 
 namespace TripCostsManager.Domain.Database.Services
 {
-    public class ItemTypesDbService : BaseService<ItemTypeEntity>
+    public class CurrenciesDbService : BaseService<CurrencyEntity>
     {
         #region Constructor
 
-        public ItemTypesDbService(IDataAccess dataAccess) : base(dataAccess)
+        public CurrenciesDbService(IDataAccess dataAccess) : base(dataAccess)
         {
         }
 
@@ -15,7 +15,7 @@ namespace TripCostsManager.Domain.Database.Services
 
         #region Public Methods
 
-        public IQueryable<ItemTypeEntity> GetAll()
+        public IQueryable<CurrencyEntity> GetAll()
         {
             return base.GetAll();
         }

@@ -25,9 +25,12 @@ namespace TripCostsManager
             builder.Services.AddSingleton<RecordsService>();
             builder.Services.AddSingleton<ItemTypesDbService>();
             builder.Services.AddSingleton<ItemTypesService>();
+            builder.Services.AddSingleton<CurrenciesDbService>();
+            builder.Services.AddSingleton<CurrenciesService>();
 
             builder.Services.AddTransient<IValidator<RecordModel>, RecordModelValidator>();
             builder.Services.AddTransient<IValidator<ItemTypeModel>, ItemTypeModelValidator>();
+            builder.Services.AddTransient<IValidator<CurrencyModel>, CurrencyModelValidator>();
 
             // Add services to the container.
             builder.Services.AddRazorComponents()

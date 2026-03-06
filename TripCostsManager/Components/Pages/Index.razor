@@ -1,7 +1,9 @@
 ﻿@page "/"
+@page "/records"
 
 @inject RecordsService RecordsService
 @inject ItemTypesService ItemTypesService
+@inject CurrenciesService CurrenciesService
 @inject NavigationManager NavigationManager
 
 @inject IJSRuntime jsRuntime
@@ -28,6 +30,19 @@
         <TCInputText Id="Title" Label="Title" @bind-Value="@RecordModel.Title" OnValidation="@(() => RecordModel.Title)" />
         <TCInputText Id="Description" Label="Description" @bind-Value="@RecordModel.Description" OnValidation="@(() => RecordModel.Description)" />
         <TCInputSelect Id="Purpose" Label="Purpose" @bind-Value="@RecordModel.Purpose" Selected="RecordModel.Purpose" />
+        <div class="form-group">
+            <div class="form-inline">
+                <label class="col-form-label">Currency</label>
+            </div>
+            <BlazoredTypeahead SearchMethod="SearchCurrency" MinimumLength="2" MaximumSuggestions="100" EnableDropDown="true" @bind-Value="RecordModel.Currency" placeholder="Name">
+                <SelectedTemplate Context="bindCurrencyContext">
+                    @bindCurrencyContext?.Name
+                </SelectedTemplate>
+                <ResultTemplate Context="bindCurrencyContext">
+                    @bindCurrencyContext.Name
+                </ResultTemplate>
+            </BlazoredTypeahead>
+        </div>
         <TCInputText Id="Price" Label="Price" @bind-Value="@RecordModel.Price" OnValidation="@(() => RecordModel.Price)" />
         <TCInputText Id="DateTime" Label="Date and time" @bind-Value="@RecordModel.DateTime" OnValidation="@(() => RecordModel.DateTime)" />
 

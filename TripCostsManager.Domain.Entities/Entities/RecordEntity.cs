@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
 using TripCostsManager.Domain.Entities.Enums;
-using TripCostsManager.Domain.Entities.Interfaces;
 
 namespace TripCostsManager.Domain.Entities.Entities
 {
@@ -27,10 +20,14 @@ namespace TripCostsManager.Domain.Entities.Entities
         public EPurpose Purpose { get; set; }
         public decimal Price { get; set; }
         public DateTime DateTime { get; set; }
-        public int ItemTypeId { get; set; }
 
+        public int ItemTypeId { get; set; }
         [ForeignKey("ItemTypeId")]
         public virtual ItemTypeEntity ItemType { get; set; }
+
+        public int CurrencyId { get; set; }
+        [ForeignKey("CurrencyId")]
+        public virtual CurrencyEntity Currency { get; set; }
         public virtual ICollection<ImageEntity> Images { get; set; }
 
         #endregion

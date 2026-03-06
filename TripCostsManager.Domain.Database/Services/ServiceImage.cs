@@ -1,8 +1,5 @@
-﻿using System;
-using System.Linq;
-using TripCostsManager.Domain.Database.Interfaces;
+﻿using TripCostsManager.Domain.Database.Interfaces;
 using TripCostsManager.Domain.Entities.Entities;
-using TripCostsManager.Domain.Entities.Enums;
 
 namespace TripCostsManager.Domain.Database.Services
 {

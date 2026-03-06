@@ -22,7 +22,16 @@
                 <td>@t.Description</td>
                 <td>@t.Purpose.GetEnumDescription()</td>
                 <td>@(t.ItemType?.Name ?? "")</td>
-                <td style="text-align: right;">¥@t.Price.ToString("#,##0.##")</td>
+                <td style="text-align: right;">
+                    @if (t.Currency.CurrencySymbol == "¥")
+                    {
+                        <text>¥@t.Price.ToString("#,##0")</text>
+                    }
+                    else
+                    {
+                        <text>@t.Currency.CurrencySymbol@t.Price.ToString("#,##0.00")</text>
+                    }
+                </td>
                 <td>@t.DateTime.ToString("dd/MM/yyyy HH:mm")</td>
                 <td>
                     <span class="oi oi-pencil" style="cursor: pointer;" aria-hidden="true" @onclick="(e) => this.OnClickEdit(e, t)"></span>

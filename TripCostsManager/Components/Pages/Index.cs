@@ -257,5 +257,17 @@ namespace TripCostsManager.Components.Pages
 
             return await Task.FromResult(itemTypes);
         }
+
+        private async Task<IEnumerable<CurrencyEntity>> SearchCurrency(string criteria)
+        {
+            IEnumerable<CurrencyEntity> currencies;
+
+            if (string.IsNullOrEmpty(criteria))
+                currencies = await this.CurrenciesService.GetAllCurrenciesAsync();
+            else
+                currencies = await this.CurrenciesService.GetAllCurrenciesAsync(x => x.Name.ToLower().Contains(criteria.ToLower()));
+
+            return await Task.FromResult(currencies);
+        }
     }
 }

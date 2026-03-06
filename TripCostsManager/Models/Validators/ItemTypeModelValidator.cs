@@ -14,7 +14,7 @@ namespace TripCostsManager.Models.Validators
                 .NotEmpty()
                 .WithMessage("Name is required")
                 .MaximumLength(50)
-                .WithMessage("Value too long, consider less than 50");
+                .WithMessage("Name too long, consider less than 50");
         }
     }
 }

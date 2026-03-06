@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TripCostsManager.Domain.Entities.Interfaces;
-using TripCostsManager.Domain.Entities.Entities;
 using TripCostsManager.Domain.Database.Interfaces;
+using TripCostsManager.Domain.Entities.Entities;
 
 namespace TripCostsManager.Domain.Database.DataAccess
 {
@@ -16,7 +10,7 @@ namespace TripCostsManager.Domain.Database.DataAccess
         #region Constructor
 
 #if DEBUG
-        public DatabaseContext() : base("Data Source=DESKTOP-7S103UN\\SQLEXPRESS;Initial Catalog=TripCostsManager_DEV;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true")
+        public DatabaseContext() : base("Data Source=localhost\\SQLEXPRESS;Initial Catalog=TripCostsManager_DEV;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False;MultipleActiveResultSets=true")
         {
             this.Database.CommandTimeout = 300;
             this.Database.CreateIfNotExists();
@@ -52,9 +46,11 @@ namespace TripCostsManager.Domain.Database.DataAccess
         private void Attach<T>(T entity) where T : BaseEntity
         {
             if (typeof(T) == typeof(RecordEntity))
-                RecordSet.Attach((RecordEntity)Convert.ChangeType(entity, typeof(T)));
+                RecordsSet.Attach((RecordEntity)Convert.ChangeType(entity, typeof(T)));
             else if (typeof(T) == typeof(ItemTypeEntity))
-                ItemTypeSet.Attach((ItemTypeEntity)Convert.ChangeType(entity, typeof(T)));
+                ItemTypesSet.Attach((ItemTypeEntity)Convert.ChangeType(entity, typeof(T)));
+            else if (typeof(T) == typeof(CurrencyEntity))
+                CurrenciesSet.Attach((CurrencyEntity)Convert.ChangeType(entity, typeof(T)));
             else if (typeof(T) == typeof(ImageEntity))
                 ImagesSet.Attach((ImageEntity)Convert.ChangeType(entity, typeof(T)));
             else
@@ -150,8 +146,9 @@ namespace TripCostsManager.Domain.Database.DataAccess
         #region DbSets
 
         public IDbSet<ImageEntity> ImagesSet { get; set; }
-        public IDbSet<RecordEntity> RecordSet { get; set; }
-        public IDbSet<ItemTypeEntity> ItemTypeSet { get; set; }
+        public IDbSet<RecordEntity> RecordsSet { get; set; }
+        public IDbSet<ItemTypeEntity> ItemTypesSet { get; set; }
+        public IDbSet<CurrencyEntity> CurrenciesSet { get; set; }
 
         #endregion
 

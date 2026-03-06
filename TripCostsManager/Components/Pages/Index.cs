@@ -206,6 +206,13 @@ namespace TripCostsManager.Components.Pages
             await AddRecord(n);
         }
 
+        private ElementReference titleRef;
+
+        public async Task OnHandleGoToTopClick()
+        {
+            await titleRef.FocusAsync();
+        }
+
         #endregion
 
         #region Overridden Methods

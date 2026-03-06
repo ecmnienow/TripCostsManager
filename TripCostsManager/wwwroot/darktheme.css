@@ -1160,6 +1160,17 @@ body.dark_theme .top-row {
         background-color: rgba(255,255,255,0.1);
     }
 
+.dark_theme .btn-gototop {
+    position: fixed;
+    bottom: 20px;
+    right: 25px;
+    background-color: rgba(100, 100, 100, 0.95);
+}
+
+    .dark_theme .btn-gototop:hover {
+        background-color: rgba(100, 100, 100, 0.5);
+    }
+
 .dark_theme input[type=text],
 .dark_theme select {
     background: #222;

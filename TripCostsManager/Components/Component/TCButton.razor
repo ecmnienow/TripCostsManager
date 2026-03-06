@@ -1,5 +1,5 @@
 ﻿<div style="z-index: 1;">
-    <button type="button" class="btn btn-default cybr-btn cybr-@Type.ToString().ToLower()" @onclick="@OnClick" data-dismiss="@(ModalDismiss ? "modal" : "")">
+    <button type="button" class="btn btn-default cybr-btn cybr-@Type.ToString().ToLower() @ExtraClass" @onclick="@OnClick" data-dismiss="@(ModalDismiss ? "modal" : "")">
         @Label
     </button>
 </div>
@@ -7,6 +7,9 @@
 @code {
     [Parameter]
     public string Label { get; set; }
+
+    [Parameter]
+    public string ExtraClass { get; set; }
 
     [Parameter]
     public Func<Task> OnClick { get; set; }

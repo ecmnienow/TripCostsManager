@@ -8,7 +8,7 @@
 
 <PageTitle>List of trip costs</PageTitle>
 
-<h1>List of trip costs</h1>
+<h1 @ref="titleRef">List of trip costs</h1>
 
 <div style="text-align: right; margin-bottom: .5rem;">
     @* <a class="btn btn-default float-left" @onmouseup="(e) => OnHandleAddRecordClick(e)" @onmousedown="(e) => OnHandleAddRecordClick(e)" @onclick="(e) => OnHandleAddRecordClick(e)">Add record</a> *@
@@ -16,6 +16,8 @@
 </div>
 
 <RecordsTable DataSource="@this.RecordsList" OnClickEdit="@(async (e, r) => await EditRecord(e, r))" OnClickDelete="@(async (e, r) => await RequestDeleteRecord(e, r))"></RecordsTable>
+
+<TCButton Label="Go to Top" ExtraClass="btn-gototop" Type="EButtonType.Default" OnClick="async () => await OnHandleGoToTopClick()"></TCButton>
 
 <EditForm EditContext="RecordModelContext">
     <FluentValidationValidator />

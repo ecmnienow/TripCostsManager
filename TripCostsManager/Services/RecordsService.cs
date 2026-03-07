@@ -10,11 +10,13 @@ namespace TripCostsManager.Services
 {
     public class RecordsService
     {
-        public RecordsService(RecordsDbService recordsDbService)
+        public RecordsService(CustomGraphsDbService customGraphsDbService, RecordsDbService recordsDbService)
         {
+            this._customGraphsDbService = customGraphsDbService;
             this._recordsDbService = recordsDbService;
         }
 
+        private CustomGraphsDbService _customGraphsDbService;
         private RecordsDbService _recordsDbService;
 
         public Task<RecordEntity[]> GetAllRecordsAsync()
@@ -134,6 +136,23 @@ namespace TripCostsManager.Services
             this._recordsDbService.Delete(recordId);
 
             return Task.CompletedTask;
+        }
+
+        public Task<CustomGraphEntity[]> GetAllCustomGraphs()
+        {
+            var result = this._customGraphsDbService.GetAll();
+
+            return Task.FromResult(result.ToArray());
+        }
+
+        public Task<ReportRowModel[]> GetCustomGraphData(string script)
+        {
+            //var customGraph = this._customGraphsDbService.GetAll().First(x => x.Title == "Alimentacao");
+
+            //var result = this._recordsDbService.ExecuteSqlCommand<DietReportModel>(customGraph.Script);
+            var result = this._recordsDbService.ExecuteSqlCommand<ReportRowModel>(script);
+
+            return Task.FromResult(result.ToArray());
         }
     }
 }

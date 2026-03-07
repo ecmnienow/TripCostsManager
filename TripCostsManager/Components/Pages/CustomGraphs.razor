@@ -1,0 +1,77 @@
+﻿@page "/customgraphs"
+
+@using Syncfusion.Blazor
+@using Syncfusion.Blazor.Charts
+
+@inject RecordsService RecordsService
+@inject NavigationManager NavigationManager
+
+@inject IJSRuntime jsRuntime
+
+<PageTitle>Custom Graphs</PageTitle>
+
+<h1>Custom Graphs</h1>
+
+@foreach (var graph in this.CustomGraphsList)
+{
+    var customGraphData = this.GetCustomGraphData(graph.Script);
+    var columnName1 = graph.ColumnNames.Split(';')[0];
+    var columnName2 = graph.ColumnNames.Split(';')[1];
+
+    <SfChart Title="@graph.Title">
+        <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime"
+        LabelFormat="dd/MM/yyyy">
+        </ChartPrimaryXAxis>
+
+        <ChartSeriesCollection>
+            @* Primeira Coluna: Valor 1 *@
+            <ChartSeries DataSource="@customGraphData" XName="Date" YName="Value1"
+                         Name="@columnName1" Type="ChartSeriesType.Column">
+            </ChartSeries>
+
+            @* Segunda Coluna: Valor 2 *@
+            <ChartSeries DataSource="@customGraphData" XName="Date" YName="Value2"
+                         Name="@columnName2" Type="ChartSeriesType.Column">
+            </ChartSeries>
+        </ChartSeriesCollection>
+
+        @* Adiciona legenda para identificar as cores *@
+        <ChartLegendSettings Visible="true"></ChartLegendSettings>
+    </SfChart>
+}
+
+@* @code {
+    public class Registro
+    {
+        public DateTime Data { get; set; }
+        public double Valor1 { get; set; }
+        public double Valor2 { get; set; }
+    }
+
+    public List<Registro> Dados = new List<Registro> {
+        new Registro { Data = new DateTime(2023, 10, 01), Valor1 = 45, Valor2 = 30 },
+        new Registro { Data = new DateTime(2023, 10, 02), Valor1 = 52, Valor2 = 60 },
+        new Registro { Data = new DateTime(2023, 10, 03), Valor1 = 38, Valor2 = 40 }
+    };
+} *@
+
+@* <div style="text-align: right; margin-bottom: .5rem;">
+    <TCButton Label="Add record" Type="EButtonType.Primary" OnClick="async () => await OnHandleAddItemTypeClick()"></TCButton>
+</div>
+
+<ItemTypesTable DataSource="@this.ItemTypesList" OnClickEdit="@(async (e, r) => await EditItemType(e, r))"></ItemTypesTable>
+
+<EditForm EditContext="ItemTypeModelContext">
+    <FluentValidationValidator />
+    <ValidationSummary />
+
+    <Modal ExtraClass="red-input-style" @ref="Modal" Title="@(() => { return ItemTypeModel.ItemTypeId > 0 ? "Edit item type" : "Add item type"; })" Buttons="Buttons.SaveCancel" Save="async () => await SaveItemType()">
+        <TCInputText Id="Name" Label="Name" @bind-Value="@ItemTypeModel.Name" OnValidation="@(() => ItemTypeModel.Name)" />
+    </Modal>
+</EditForm>
+
+<EditForm EditContext="AlertModalContext">
+    <Modal @ref="ModalAlert" ExtraClass="modal-backgroud" Title="@(() => { return AlertModel.Title; })" Buttons="Buttons.OK">
+        <TCText Id="Message" Text="@AlertModel.Message" />
+    </Modal>
+</EditForm> *@

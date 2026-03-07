@@ -51,6 +51,8 @@ namespace TripCostsManager.Domain.Database.DataAccess
                 ItemTypesSet.Attach((ItemTypeEntity)Convert.ChangeType(entity, typeof(T)));
             else if (typeof(T) == typeof(CurrencyEntity))
                 CurrenciesSet.Attach((CurrencyEntity)Convert.ChangeType(entity, typeof(T)));
+            else if (typeof(T) == typeof(CustomGraphEntity))
+                CustomGraphsSet.Attach((CustomGraphEntity)Convert.ChangeType(entity, typeof(T)));
             else if (typeof(T) == typeof(ImageEntity))
                 ImagesSet.Attach((ImageEntity)Convert.ChangeType(entity, typeof(T)));
             else
@@ -141,6 +143,13 @@ namespace TripCostsManager.Domain.Database.DataAccess
             Entry(entity).State = EntityState.Unchanged;
         }
 
+        public IList<T> ExecuteSqlCommand<T>(string script) where T : class
+        {
+            var result = this.Database.SqlQuery<T>(script).ToList();
+
+            return result;
+        }
+
         #endregion
 
         #region DbSets
@@ -149,6 +158,7 @@ namespace TripCostsManager.Domain.Database.DataAccess
         public IDbSet<RecordEntity> RecordsSet { get; set; }
         public IDbSet<ItemTypeEntity> ItemTypesSet { get; set; }
         public IDbSet<CurrencyEntity> CurrenciesSet { get; set; }
+        public IDbSet<CustomGraphEntity> CustomGraphsSet { get; set; }
 
         #endregion
 

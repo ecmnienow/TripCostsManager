@@ -59,6 +59,11 @@ namespace TripCostsManager.Domain.Database.Services
             this._dataAccess.SetUnchanged(entity);
         }
 
+        public virtual IList<TCustom> ExecuteSqlCommand<TCustom>(string script) where TCustom : class
+        {
+            return this._dataAccess.ExecuteSqlCommand<TCustom>(script);
+        }
+
         #endregion
     }
 }

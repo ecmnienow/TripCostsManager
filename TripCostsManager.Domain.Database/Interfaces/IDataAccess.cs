@@ -13,5 +13,6 @@ namespace TripCostsManager.Domain.Database.Interfaces
         IDbTransaction GetTransaction();
         int SaveChanges();
         void SetUnchanged<T>(T entity) where T : BaseEntity;
+        IList<T> ExecuteSqlCommand<T>(string script) where T : class;
     }
 }

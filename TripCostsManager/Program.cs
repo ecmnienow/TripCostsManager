@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Syncfusion.Blazor;
 using TripCostsManager.Components;
 using TripCostsManager.Domain.Database.DataAccess;
 using TripCostsManager.Domain.Database.Interfaces;
@@ -27,6 +28,7 @@ namespace TripCostsManager
             builder.Services.AddSingleton<ItemTypesService>();
             builder.Services.AddSingleton<CurrenciesDbService>();
             builder.Services.AddSingleton<CurrenciesService>();
+            builder.Services.AddSingleton<CustomGraphsDbService>();
 
             builder.Services.AddTransient<IValidator<RecordModel>, RecordModelValidator>();
             builder.Services.AddTransient<IValidator<ItemTypeModel>, ItemTypeModelValidator>();
@@ -35,6 +37,8 @@ namespace TripCostsManager
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+
+            builder.Services.AddSyncfusionBlazor();
 
             var app = builder.Build();
 

@@ -11,6 +11,7 @@
     <PackageReference Include="Blazored.FluentValidation" Version="2.2.0" />
     <PackageReference Include="Blazored.Typeahead" Version="4.6.0" />
     <PackageReference Include="Syncfusion.Blazor.Charts" Version="32.2.8" />
+    <PackageReference Include="Syncfusion.Blazor.Themes" Version="32.2.8" />
   </ItemGroup>
 
   <ItemGroup>

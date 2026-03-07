@@ -101,16 +101,10 @@ namespace TripCostsManager.Components.Pages
                 this.CustomGraphsList.Add(news);
         }
         
-        private List<ReportRowModel> GetCustomGraphData(string script)
+        private async Task<ReportRowModel[]> GetCustomGraphData(string script)
         {
-            var customGraphsList = RecordsService.GetCustomGraphData(script).Result
-                   .ToList();
+            var customGraphsList = await RecordsService.GetCustomGraphData(script);
 
-            //var customGraphsList = (await RecordsService.GetCustomGraphData(script))
-            //        .ToList();
-
-            //foreach (var news in customGraphsList)
-            //    this.CustomGraphsList.Add(news);
             return customGraphsList;
         }
 

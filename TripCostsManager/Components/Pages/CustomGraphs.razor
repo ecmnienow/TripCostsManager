@@ -2,6 +2,7 @@
 
 @using Syncfusion.Blazor
 @using Syncfusion.Blazor.Charts
+@using TripCostsManager.Domain.Entities.Entities
 
 @inject RecordsService RecordsService
 @inject NavigationManager NavigationManager
@@ -14,46 +15,59 @@
 
 @foreach (var graph in this.CustomGraphsList)
 {
-    var customGraphData = this.GetCustomGraphData(graph.Script);
+    var customGraphData = this.GetCustomGraphData(graph.Script).Result;
+
     var columnName1 = graph.ColumnNames.Split(';')[0];
     var columnName2 = graph.ColumnNames.Split(';')[1];
 
-    <SfChart Title="@graph.Title">
+    <h2>@graph.Title</h2>
+    <SfChart Title="@graph.Title" Theme="Theme.TailwindDark" Background="Transparent">
         <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime"
-        LabelFormat="dd/MM/yyyy">
+                           LabelFormat="dd/MM" IntervalType="IntervalType.Days" Interval="1">
         </ChartPrimaryXAxis>
 
+        <ChartPrimaryYAxis LabelFormat="R$ #,##0.00" Title="Valores em Reais">
+        </ChartPrimaryYAxis>
+
         <ChartSeriesCollection>
-            @* Primeira Coluna: Valor 1 *@
+            @* First column *@
             <ChartSeries DataSource="@customGraphData" XName="Date" YName="Value1"
                          Name="@columnName1" Type="ChartSeriesType.Column">
+                @* <ChartMarker>
+                    <ChartDataLabel Visible="true" />
+                </ChartMarker> *@
             </ChartSeries>
 
-            @* Segunda Coluna: Valor 2 *@
+            @* Second column *@
             <ChartSeries DataSource="@customGraphData" XName="Date" YName="Value2"
                          Name="@columnName2" Type="ChartSeriesType.Column">
             </ChartSeries>
         </ChartSeriesCollection>
 
+        <ChartTooltipSettings Enable="true" Shared="false" FadeOutDuration="250">
+            @* <Template>
+                @{
+                    // O contexto do template é o objeto de dados daquela coluna
+                    var data = context as ReportRowModel;
+                    <div style="border: 1px solid #ccc; padding: 10px; background: #fff; border-radius: 5px;">
+                        <div style="font-weight: bold; border-bottom: 1px solid #eee; margin-bottom: 5px;">
+                            Data: @data.Date.ToString("dd/MM/yyyy")
+                        </div>
+                        <div>
+                            <span style="color: #007bff;">Faturamento:</span>
+                            <strong>R$ @data.Value1.ToString("N2")</strong>
+                        </div>
+                    </div>
+                }
+            </Template> *@
+        </ChartTooltipSettings>
+
         @* Adiciona legenda para identificar as cores *@
         <ChartLegendSettings Visible="true"></ChartLegendSettings>
     </SfChart>
+
+    <br/>
 }
-
-@* @code {
-    public class Registro
-    {
-        public DateTime Data { get; set; }
-        public double Valor1 { get; set; }
-        public double Valor2 { get; set; }
-    }
-
-    public List<Registro> Dados = new List<Registro> {
-        new Registro { Data = new DateTime(2023, 10, 01), Valor1 = 45, Valor2 = 30 },
-        new Registro { Data = new DateTime(2023, 10, 02), Valor1 = 52, Valor2 = 60 },
-        new Registro { Data = new DateTime(2023, 10, 03), Valor1 = 38, Valor2 = 40 }
-    };
-} *@
 
 @* <div style="text-align: right; margin-bottom: .5rem;">
     <TCButton Label="Add record" Type="EButtonType.Primary" OnClick="async () => await OnHandleAddItemTypeClick()"></TCButton>

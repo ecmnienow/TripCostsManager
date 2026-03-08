@@ -5,6 +5,8 @@ namespace TripCostsManager.Domain.Entities.Enums
     public enum EGraphType
     {
         [Description("Colunms")]
-        Colunms = 0
+        Colunms = 0,
+        [Description("Pie")]
+        Pie = 1
     }
 }

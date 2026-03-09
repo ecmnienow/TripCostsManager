@@ -55,6 +55,8 @@ namespace TripCostsManager.Services
             if (model.RecordId > 0)
             {
                 record = await this.GetRecordAsync(model.RecordId);
+                record.CurrencyId = model.Currency.Id;
+                record.ItemTypeId = model.ItemType.Id;
 
                 var propsModel = typeof(RecordModel).GetProperties();
                 var entityType = typeof(RecordEntity);

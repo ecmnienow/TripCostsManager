@@ -43,6 +43,14 @@ namespace TripCostsManager.Models.Validators
                     if (!DateTime.TryParse(x, out DateTime value) || value < new DateTime(1950, 1, 1))
                         context.AddFailure($"\"{x}\" is not a valid date or too old");
                 });
+
+            RuleFor(x => x.ItemType)
+                .NotNull()
+                .WithMessage("ItemType is required");
+
+            RuleFor(x => x.Currency)
+                .NotNull()
+                .WithMessage("Currency is required");
         }
     }
 }

@@ -15,88 +15,99 @@
 
 <br />
 
-@foreach (var graph in this.CustomGraphsList)
-{
-    var customGraphData = this.GetCustomGraphData(graph.Script).Result;
+<div class="container-fluid">
+    <div class="row">
+        @foreach (var graph in this.CustomGraphsList)
+        {
+            var customGraphData = this.GetCustomGraphData(graph.Script).Result;
 
-    <h2>@graph.Title</h2>
+            @if (graph.Type == Domain.Entities.Enums.EGraphType.Colunms)
+            {
+                <h2>@graph.Title</h2>
 
-    if (graph.Type == Domain.Entities.Enums.EGraphType.Colunms)
-    {
-        var columnName1 = graph.ColumnNames.Split(';')[0];
-        var columnName2 = graph.ColumnNames.Split(';')[1];
+                var columnName1 = graph.ColumnNames.Split(';')[0];
+                var columnName2 = graph.ColumnNames.Split(';')[1];
 
-        <SfChart Title="" Theme="Theme.TailwindDark" Background="Transparent">
-            <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime"
-                               LabelFormat="dd/MM" IntervalType="IntervalType.Days" Interval="1">
-            </ChartPrimaryXAxis>
+                <SfChart Title="" Theme="Theme.TailwindDark" Background="Transparent">
+                    <ChartPrimaryXAxis ValueType="Syncfusion.Blazor.Charts.ValueType.DateTime"
+                                        LabelFormat="dd/MM" IntervalType="IntervalType.Days" Interval="1">
+                    </ChartPrimaryXAxis>
 
-            <ChartPrimaryYAxis LabelFormat="R$ #,##0.00" Title="Valores em Reais">
-            </ChartPrimaryYAxis>
+                    <ChartPrimaryYAxis LabelFormat="$ #,##0.00" Title="Valores em Reais">
+                    </ChartPrimaryYAxis>
 
-            <ChartSeriesCollection>
-                @* First column *@
-                <ChartSeries DataSource="@customGraphData" XName="Date" YName="Value1"
-                             Name="@columnName1" Type="ChartSeriesType.Column">
-                    @* <ChartMarker>
-                        <ChartDataLabel Visible="true" />
-                    </ChartMarker> *@
-                </ChartSeries>
+                    <ChartSeriesCollection>
+                        @* First column *@
+                        <ChartSeries DataSource="@customGraphData" XName="Date" YName="Value1"
+                                        Name="@columnName1" Type="ChartSeriesType.Column">
+                            @* <ChartMarker>
+                                <ChartDataLabel Visible="true" />
+                            </ChartMarker> *@
+                        </ChartSeries>
 
-                @* Second column *@
-                <ChartSeries DataSource="@customGraphData" XName="Date" YName="Value2"
-                             Name="@columnName2" Type="ChartSeriesType.Column">
-                </ChartSeries>
-            </ChartSeriesCollection>
+                        @* Second column *@
+                        <ChartSeries DataSource="@customGraphData" XName="Date" YName="Value2"
+                                        Name="@columnName2" Type="ChartSeriesType.Column">
+                        </ChartSeries>
+                    </ChartSeriesCollection>
 
-            <ChartTooltipSettings Enable="true" Shared="false" FadeOutDuration="250">
-            </ChartTooltipSettings>
+                    <ChartTooltipSettings Enable="true" Shared="false" FadeOutDuration="250"  Format="${point.x}: <b>${point.y}</b>">
+                    </ChartTooltipSettings>
 
-            @* Adiciona legenda para identificar as cores *@
-            <ChartLegendSettings Visible="true"></ChartLegendSettings>
-        </SfChart>
-    }
+                    @* Adiciona legenda para identificar as cores *@
+                    <ChartLegendSettings Visible="true"></ChartLegendSettings>
+                </SfChart>
+            }
 
-    if (graph.Type == Domain.Entities.Enums.EGraphType.Pie)
-    {
-        <SfAccumulationChart Title="" Theme="Theme.TailwindDark" Background="Transparent">
-            <AccumulationChartSeriesCollection>
-                <AccumulationChartSeries DataSource="@customGraphData"
-                                         XName="Name"
-                                         YName="Value1"
-                                         Name="@graph.Title"
-                                         Type="AccumulationType.Pie">
-                    @* Configuração para mostrar as etiquetas (labels) dentro da fatia *@
-                    <AccumulationDataLabelSettings Visible="true" Name="Value1">
-                        <Template>
-                            @{
-                                var data = context as AccumulationChartDataPointInfo;
-                                if (data.Percentage > 15)
-                                {
-                                    // O Syncfusion entrega o valor em data.Y
-                                    <div style="background: #333; color: #fff; padding: 5px; border-radius: 4px; border: 1px solid #777;">
-                                        @*@data.X: <b>@Convert.ToDecimal(data.Y).ToString("C2")</b>*@
-                                        @Convert.ToDecimal(data.Y).ToString("C2")
-                                    </div>
-                                }
-                            }
-                        </Template>
-                    </AccumulationDataLabelSettings>
-                </AccumulationChartSeries>
-            </AccumulationChartSeriesCollection>
+            @if (graph.Type == Domain.Entities.Enums.EGraphType.Pie)
+            {
+                <div class="col-md-6">
 
-            @* Habilita a legenda e o tooltip que você já configurou anteriormente *@
-            <AccumulationChartLegendSettings Visible="true" Position="LegendPosition.Bottom" />
+                    <h2>@graph.Title</h2>
+                    
+                    <div>
+                        <SfAccumulationChart Title="" Theme="Theme.TailwindDark" Background="Transparent">
+                            <AccumulationChartSeriesCollection>
+                                <AccumulationChartSeries DataSource="@customGraphData"
+                                                            XName="Name"
+                                                            YName="Value1"
+                                                            Name="@graph.Title"
+                                                            Type="AccumulationType.Pie">
+                                    @* Configuração para mostrar as etiquetas (labels) dentro da fatia *@
+                                    <AccumulationDataLabelSettings Visible="true" Name="Value1">
+                                        <Template>
+                                            @{
+                                                var data = context as AccumulationChartDataPointInfo;
+                                                if (data.Percentage > 15)
+                                                {
+                                                    // O Syncfusion entrega o valor em data.Y
+                                                    <div style="background: #333; color: #fff; padding: 5px; border-radius: 4px; border: 1px solid #777;">
+                                                        @*@data.X: <b>@Convert.ToDecimal(data.Y).ToString("C2")</b>*@
+                                                        @Convert.ToDecimal(data.Y).ToString("C2")
+                                                    </div>
+                                                }
+                                            }
+                                        </Template>
+                                    </AccumulationDataLabelSettings>
+                                </AccumulationChartSeries>
+                            </AccumulationChartSeriesCollection>
 
-            @* Tooltip configurado: ${point.x} traz o nome e :C2 aplica a máscara de moeda *@
-            <AccumulationChartTooltipSettings Enable="true" FadeOutDuration="250" Format="${point.x}: <b>R$ ${point.y}</b><br/>Porcentagem: <b>${point.percentage}%</b>">
+                            @* Habilita a legenda e o tooltip que você já configurou anteriormente *@
+                            <AccumulationChartLegendSettings Visible="true" Position="LegendPosition.Left" />
 
-            </AccumulationChartTooltipSettings>
-        </SfAccumulationChart>
-    }
+                            @* Tooltip configurado: ${point.x} traz o nome e :C2 aplica a máscara de moeda *@
+                            <AccumulationChartTooltipSettings Enable="true" FadeOutDuration="250" Format="${point.x}: <b>R$ ${point.y}</b><br/>Porcentagem: <b>${point.percentage}%</b>">
 
+                            </AccumulationChartTooltipSettings>
+                        </SfAccumulationChart>
+                    </div>
+                </div>
+            }
+        }
+    </div>
     <br/>
-}
+</div>
+
 
 @* <div style="text-align: right; margin-bottom: .5rem;">
     <TCButton Label="Add record" Type="EButtonType.Primary" OnClick="async () => await OnHandleAddItemTypeClick()"></TCButton>

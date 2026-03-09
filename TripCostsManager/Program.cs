@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Syncfusion.Blazor;
+using Syncfusion.Licensing;
 using TripCostsManager.Components;
 using TripCostsManager.Domain.Database.DataAccess;
 using TripCostsManager.Domain.Database.Interfaces;
@@ -39,6 +40,7 @@ namespace TripCostsManager
                 .AddInteractiveServerComponents();
 
             builder.Services.AddSyncfusionBlazor();
+            SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1JGaF1cVWhIfEx1RHxQdld5ZFRHallYTnNWUj0eQnxTdENjWn9XcXZQR2BaVEN0WkleYQ==");
 
             var app = builder.Build();
 

@@ -23,7 +23,6 @@
 
 <EditForm EditContext="RecordModelContext">
     <FluentValidationValidator />
-    <ValidationSummary />
 
     <Modal ExtraClass="red-input-style" @ref="Modal" Title="@(() => { return RecordModel.RecordId > 0 ? "Edit record" : "Add record"; })" Buttons="Buttons.SaveCancel" Save="async () => await SaveRecord()">
         <TCInputText Id="MarketName" Label="Market" @bind-Value="@RecordModel.MarketName" OnValidation="@(() => RecordModel.MarketName)" />
@@ -34,14 +33,20 @@
             <div class="form-inline">
                 <label class="col-form-label">Currency</label>
             </div>
-            <BlazoredTypeahead SearchMethod="SearchCurrency" MinimumLength="2" MaximumSuggestions="100" EnableDropDown="true" @bind-Value="RecordModel.Currency" placeholder="Name">
-                <SelectedTemplate Context="bindCurrencyContext">
-                    @bindCurrencyContext?.Name
+            <BlazoredTypeahead SearchMethod="SearchCurrency"
+                               MinimumLength="2"
+                               MaximumSuggestions="100"
+                               EnableDropDown="true"
+                               @bind-Value="RecordModel.Currency"
+                               placeholder="Select the currency...">
+                <SelectedTemplate Context="selectedCurrency">
+                    @selectedCurrency?.Name
                 </SelectedTemplate>
-                <ResultTemplate Context="bindCurrencyContext">
-                    @bindCurrencyContext.Name
+                <ResultTemplate Context="resultCurrency">
+                    @resultCurrency.Name
                 </ResultTemplate>
             </BlazoredTypeahead>
+            <ValidationMessage For="@(() => RecordModel.Currency)" />
         </div>
         <TCInputText Id="Price" Label="Price" @bind-Value="@RecordModel.Price" OnValidation="@(() => RecordModel.Price)" />
         <TCInputText Id="DateTime" Label="Date and time" @bind-Value="@RecordModel.DateTime" OnValidation="@(() => RecordModel.DateTime)" />
@@ -50,21 +55,21 @@
             <div class="form-inline">
                 <label class="col-form-label">Type</label>
             </div>
-            <BlazoredTypeahead SearchMethod="SearchItemType" MinimumLength="2" MaximumSuggestions="100" EnableDropDown="true" @bind-Value="RecordModel.ItemType" placeholder="Name">
-                <SelectedTemplate Context="bindItemTypeContext">
-                    @bindItemTypeContext?.Name
+            <BlazoredTypeahead SearchMethod="SearchItemType"
+                               MinimumLength="2"
+                               MaximumSuggestions="100"
+                               EnableDropDown="true"
+                               @bind-Value="RecordModel.ItemType"
+                               placeholder="Select the item type">
+                <SelectedTemplate Context="selectedItemType">
+                    @selectedItemType?.Name
                 </SelectedTemplate>
-                <ResultTemplate Context="bindItemTypeContext">
-                    @bindItemTypeContext.Name
+                <ResultTemplate Context="resultItemType">
+                    @resultItemType.Name
                 </ResultTemplate>
             </BlazoredTypeahead>
+            <ValidationMessage For="@(() => RecordModel.ItemType)" />
         </div>
-        @* <TCInputText Id="FileName" Label="Imagem" @bind-Value="@RecordModel.Image" OnValidation="@(() => RecordModel.Image)" /> *@
-
-        @*  <div class="form-group form-inline">
-            <GVCheckBox Id="Interested" Label="Interessante" @bind-Value="@RecordModel.Interested" ExtraClass="col-6" />
-            <GVCheckBox Id="Ignored" Label="Ignorado" @bind-Value="@RecordModel.Ignored" ExtraClass="col-6" />
-        </div> *@
     </Modal>
 </EditForm>
 
